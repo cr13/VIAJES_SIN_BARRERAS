@@ -1,7 +1,3 @@
----
-layout: index
----
-
 ## Hito 1
 
 ## Proyecto elegido
