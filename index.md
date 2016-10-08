@@ -1,6 +1,11 @@
 ---
 layout: index
 ---
+## Hito 0
+
+#### Documentación
+
+  Creación de un sitio web llamado Viajes sin barreras. Se trataría de una web que ofrezca alojamiento y edificios turísticos que se pueda visitar y sean accesibles para minusválidos.
 
 ## Hito 1
 
