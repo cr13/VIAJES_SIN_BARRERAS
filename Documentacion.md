@@ -8,7 +8,7 @@ Creación de un sitio web llamado Viajes sin barreras. Se trataría de una web q
 
 ## Proyecto elegido
 
-Sitio web VIAJES SIN BARRERAS
+Sitio web llamado VIAJES SIN BARRERAS
 
 ### Descripción
 
