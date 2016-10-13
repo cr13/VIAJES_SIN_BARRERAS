@@ -1,11 +1,6 @@
 ---
 layout: index
 ---
-## Hito 0
-
-### Documentación
-
-  Creación de un sitio web llamado Viajes sin barreras. Se trataría de una web que ofrezca alojamiento y edificios turísticos que se pueda visitar y sean accesibles para minusválidos.
 
 ## Hito 1
 
@@ -16,16 +11,19 @@ Sitio web VIAJES SIN BARRERAS
 ### Descripción
 
 Turismo adaptado para personas con movilidad reducida, discapacitadas que tengan problemas de accesibilidad, que se muevan en sillas de ruedas.
-- Alojamiento y edificios turísticos que se pueda visitar y sean accesibles.
 
 - Debe aparecer toda la información relativa al hotel, ubicación, y las habitaciones que tiene disponible para minusválidos.
 
-- Diseñar la página web por comunidades autónomas y provincias.
+- Organizar las busquedas por comunidades autónomas y provincias, número de personas, fecha de entrada salida, etc.
 
-La finalidad de la página es para facilitar a las personas con discapacidad que quieren viajar a las cuales se les presenta muchos obstáculos para escoger alojamiento. La mayoría de los hoteles que aparecen en las webs no ofrecen toda la información relativa a la accesibilidad.
+- Para realizar la compra de una estancia los usuarios deberán estar registrado. Cada usuario podrá ver sus compras realizadas.
 
 #### Servicios necesarios
 
-- Servidor de base de datos
-- Despliegue en la nube
-- Servicio web
+- Uno o dos servidores de base de datos, aun no sé si lo almacenare todo en la misma base de datos o en dos pero para empezar usare una que contendrá todos los datos de los hoteles.
+
+- El despliegue se realizará en principio en Amazon Web Services, aunque puede cambiar si durante el desarrollo de la asignatura se encuentra uno con más ventajas.
+
+#### Posible colaborador
+
+Un bot en Python que me devuelva todos los hoteles posibles según los requisitos marcados por el usuario.

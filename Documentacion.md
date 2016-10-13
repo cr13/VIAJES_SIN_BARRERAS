@@ -15,7 +15,7 @@ Turismo adaptado para personas con movilidad reducida, discapacitadas que tengan
 
 La finalidad de la página es para facilitar a las personas con discapacidad que quieren viajar a las cuales se les presenta muchos obstáculos para escoger alojamiento. La mayoría de los hoteles que aparecen en las webs no ofrecen toda la información relativa a la accesibilidad.
 
-#### Servicios necesarios
+### Servicios necesarios
 
 - Servidor de base de datos
 - Despliegue en la nube
