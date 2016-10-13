@@ -20,7 +20,7 @@ Turismo adaptado para personas con movilidad reducida, discapacitadas que tengan
 
 #### Servicios necesarios
 
-- Uno o dos servidores de base de datos, aun no sé si lo almacenare todo en la misma base de datos o en dos pero para empezar usare una que contendrá todos los datos de los hoteles.
+- Dos servidores de base de datos,en uno almacenare todo lo referente a hoteles y en el otro almacenaré los usuarios registrados y sus correspondientes datos, mediante se vaya desarrollando se estudiara posibilidad de añadir más bases de datos.
 
 - El despliegue se realizará en principio en Amazon Web Services, aunque puede cambiar si durante el desarrollo de la asignatura se encuentra uno con más ventajas.
 
