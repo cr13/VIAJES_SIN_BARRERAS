@@ -1,5 +1,5 @@
 # VIAJES_SIN_BARRERAS
 
-[Enlace documentación hito 0](https://github.com/cr13/VIAJES_SIN_BARRERAS/blob/Documentacion/Documentacion.md)
+[Pruebas en travis](https://travis-ci.org/cr13/VIAJES_SIN_BARRERAS.svg?branch=master)
 
 [Descripción del proyecto](https://cr13.github.io/VIAJES_SIN_BARRERAS/)
