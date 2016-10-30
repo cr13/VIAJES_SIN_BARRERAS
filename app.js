@@ -4,9 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var apis = require('./routes/apis');
+var mongoose = require('mongoose');
+
 
 var app = express();
 
@@ -23,7 +24,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/apis', apis);
+
+//app.get('/insertartipohab',function(req,res){
+//  var objBD = new BD(res);
+//  objBD.insertaTipoHAb('suite','N');
+//});
+
+// connect to our database
+mongoose.Promise = global.Promise
+mongoose.connect('mongodb://localhost:27017/usuarios');
+mongoose.connection.on('error', function() {
+  console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
