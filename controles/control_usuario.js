@@ -44,8 +44,9 @@ exports.actualizar = function(req, res) {
     if(req.body.name)usu.name=req.body.name;
     if(req.body.passwords)usu.password=req.body.passwords;
     if(req.body.email)usu.email=req.body.email;
+    if(req.body.dni)usu.DNI=req.body.dni;
     usu.save(function(err,result){
-      if(err) return res.json(503,{mensaje:'Hubo un problema al actualizar los datos personales'});
+      if(err) return res.json(503,{mensaje:'Error al actualizar los datos del usuario'});
       res.json(200,{mensaje: 'El usuario ha sido actualizado'});
     });
 
@@ -56,9 +57,11 @@ exports.actualizar = function(req, res) {
 
 //DELETE - Elimina a un usuario
 exports.eliminar = function(req, res) {
-
+  //console.log(req.params);
   modelo_usuario.remove({DNI:req.params.dni},function(err, result) {
-    if(err) return res.json(500,{mensaje:'El DNI no existe'});
+    //console.log(err);
+    //console.log(result);
+    if(err) return res.json(500,{mensaje:'El DNI no se encuentra en el sistema'});
     res.json(200,{mensaje: 'El usuario ha sido eliminado'});
   });
 

@@ -14,8 +14,47 @@ describe('Test base de datos Mongo', function() {
       res.should.have.status(200);
       res.should.be.json;
       done();
-
     });
+  });
+  it('Deberia logerme con el usuario creado anteriormente',function(done){
+    chai.request(server)
+    .post('/apis/login')
+    .send({ username: 'IV',passwords: 'iv17'})
+    .end(function(err, res){
+      res.should.have.status(200);
+      res.should.be.json;
+      done();
+    });
+  });
 
+  it('Deberia modificar el usuario IV y vamos a modificar el DNI:77124582Q y nombre:iv16_17',function(done){
+    chai.request(server)
+    .put('/apis/usuarios/'+'IV')
+    .send({name:'iv16_17', dni:'77124582Q'})
+    .end(function(err, res){
+      res.should.have.status(200);
+      res.should.be.json;
+      done();
+    });
+  });
+
+  it('Deberia borrar el usuario IV',function(done){
+    chai.request(server)
+    .delete('/apis/usuarios/'+'77124582Q')
+    .end(function(err, res){
+      res.should.have.status(200);
+      res.should.be.json;
+      done();
+    });
+  });
+  it('Deberia no logerme ya que acabo de eliminar el usuario IV',function(done){
+    chai.request(server)
+    .post('/apis/login')
+    .send({ username: 'IV',passwords: 'iv17'})
+    .end(function(err, res){
+      res.should.have.status(200);
+      res.should.be.json;
+      done();
+    });
   });
 });
