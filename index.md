@@ -27,3 +27,33 @@ Turismo adaptado para personas con movilidad reducida, discapacitadas que tengan
 #### Posible colaborador
 
 Un bot en Python que me devuelva todos los hoteles posibles según los requisitos marcados por el usuario.
+
+## Hito 2
+
+## Sistemas de Integración Continua
+
+Como sistema de integración continua he elegido Travis-CI, ya que es él que se mencionó y recomendó el profesor en clase.    
+Por lo tanto he añadido el archivo de configuración .travis.yml a mi repositorio.
+
+### Test
+
+Para la realización de los tests he usado mocha y chai, que realizan una serie de peticiones (POST, GET, PUT y DELETE) a la API
+
+Los tests se ejecutan con el comando
+
+    npm test
+
+### Instalación
+  - En el directorio ráiz del proyecto
+  - npm install
+  - npm start
+
+### Requisitos mínimos
+  - [Node.js](https://nodejs.org/en/)
+  - [npm](https://docs.npmjs.com/getting-started/installing-node)
+  - [MySQL server](https://help.ubuntu.com/lts/serverguide/mysql.html)
+  - [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
+
+## Ejercicios Tema 2
+
+[Ejercicios](https://github.com/cr13/Ejercicios_IV/blob/master/tema2.md)
