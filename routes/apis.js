@@ -15,6 +15,10 @@ router.route('/usuarios')
 router.route('/usuarios/:username')
  .get(usuarioCtrl.findByUsername)
  .put(usuarioCtrl.actualizar)
+
+router.route('/usuarios/:DNI')
+ .get(usuarioCtrl.findByDNI)
+ .put(usuarioCtrl.actualizarByDNI)
  .delete(usuarioCtrl.eliminar);
 
 router.route("/login")

@@ -10,11 +10,21 @@ exports.findAll = function(req, res) {
  });
 };
 
-//GET - Devuelve los datos de un usuario especifico
+//GET - Devuelve los datos de un usuario según el nick
 exports.findByUsername = function(req, res) {
   modelo_usuario.findOne({username:req.params.username},function(err, result){
     if(err) return res.json(500, { mensaje:err.message});
     if(result==null) return res.json(500, { mensaje: 'No hay ningun usuario con ese username' });
+    res.json(200,result);
+  });
+
+};
+
+//GET - Devuelve los datos de un usuario según el DNI
+exports.findByDNI = function(req, res) {
+  modelo_usuario.findOne({DNI:req.params.DNI},function(err, result){
+    if(err) return res.json(500, { mensaje:err.message});
+    if(result==null) return res.json(500, { mensaje: 'No hay ningun usuario con ese DNI en el sistema' });
     res.json(200,result);
   });
 
@@ -36,7 +46,7 @@ exports.add = function(req, res) {
  });
 };
 
-//PUT - Actualiza usuario
+//PUT - Actualiza usuario por username
 exports.actualizar = function(req, res) {
   modelo_usuario.findOne({username: req.params.username},function(err,usu){
     if(err) return res.json(501, { mensaje:err.message});
@@ -49,25 +59,41 @@ exports.actualizar = function(req, res) {
       if(err) return res.json(503,{mensaje:'Error al actualizar los datos del usuario'});
       res.json(200,{mensaje: 'El usuario ha sido actualizado'});
     });
-
   });
-
-
 };
 
-//DELETE - Elimina a un usuario
+//PUT - Actualiza usuario
+exports.actualizarByDNI = function(req, res) {
+  modelo_usuario.findOne({DNI: req.params.DNI},function(err,usu){
+    if(err) return res.json(501, { mensaje:err.message});
+    if(usu==null) return res.json(502, { mensaje: 'No hay ningun usuario con ese DNI' });
+    if(req.body.name)usu.name=req.body.name;
+    if(req.body.passwords)usu.password=req.body.passwords;
+    if(req.body.email)usu.email=req.body.email;
+    if(req.body.dni)usu.DNI=req.body.dni;
+    usu.save(function(err,result){
+      if(err) return res.json(503,{mensaje:'Error al actualizar los datos del usuario'});
+      res.json(200,{mensaje: 'El usuario ha sido actualizado'});
+    });
+  });
+};
+
+//DELETE - Elimina a un usuario por DNI
 exports.eliminar = function(req, res) {
-  //console.log(req.params);
-  modelo_usuario.remove({DNI:req.params.dni},function(err, result) {
-    //console.log(err);
-    //console.log(result);
+  modelo_usuario.remove({DNI:req.params.DNI},function(err, result) {
     if(err) return res.json(500,{mensaje:'El DNI no se encuentra en el sistema'});
     res.json(200,{mensaje: 'El usuario ha sido eliminado'});
   });
-
-
-
 };
+
+//DELETE - Elimina a un usuario por username
+exports.eliminarBynick = function(req, res) {
+  modelo_usuario.remove({username:req.params.username},function(err, result) {
+    if(err) return res.json(500,{mensaje:'El username no se encuentra en el sistema'});
+    res.json(200,{mensaje: 'El usuario ha sido eliminado'});
+  });
+};
+
 //POST - Te confirma si el usuario esta registrado
 exports.login = function(req, res) {
   modelo_usuario.findOne({username:req.body.username, password:req.body.passwords},function(err,result){
