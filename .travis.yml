@@ -8,5 +8,4 @@ node_js:
   - "6.9.0"
 
 services:
-  - mysql
   - mongodb

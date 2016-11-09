@@ -32,8 +32,9 @@ app.use('/apis', apis);
 //});
 
 // connect to our database
+var theport = process.env.PORT || 3000;
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost:27017/usuarios');
+mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost:27017/usuarios');
 mongoose.connection.on('error', function() {
   console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
 });
@@ -67,6 +68,10 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+app.listen(theport, function() {
+  console.log('Express server listening on port ' + theport);
 });
 
 

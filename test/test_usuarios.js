@@ -47,6 +47,7 @@ describe('Test base de datos Mongo', function() {
       done();
     });
   });
+
   it('No debería logerme ya que acabo de eliminar el usuario IV',function(done){
     chai.request(server)
     .post('/apis/login')
@@ -57,4 +58,15 @@ describe('Test base de datos Mongo', function() {
       done();
     });
   });
+
+  it('Deberia no mostrar al usuario Pepe',function(done){
+    chai.request(server)
+    .get('/api/usuario/'+'Pepe')
+    .end(function(err, res){
+      res.should.have.status(500);
+      res.should.be.json;
+      done();
+    });
+});
+
 });
