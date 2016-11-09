@@ -61,7 +61,7 @@ describe('Test base de datos Mongo', function() {
 
   it('Deberia no mostrar al usuario Pepe',function(done){
     chai.request(server)
-    .get('/api/usuario/'+'Pepe')
+    .get('/api/usuarios/'+'Pepe')
     .end(function(err, res){
       res.should.have.status(500);
       res.should.be.json;
