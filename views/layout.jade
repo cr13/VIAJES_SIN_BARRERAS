@@ -42,30 +42,77 @@ html(lang='en')
       }
       .row.content {height:auto;}
       }
+			.color-red{color: #FF0000;}
+			.color-green{color: #6cbc42;}
+			.color-blue{color: #0080c5;}
+			.color-twitter{color:#00aced;}
+			.color-facebook{color:#00539f;}
+			.color-linkedin{color:#0176b5;}
+
+			/*NAVBAR STYLES*/
+			.navbar-border{border-bottom: solid 5px #0080c5;}
+			.login-panel {
+			min-width: 250px;
+			border-top: 14px solid #0080c5;
+			border-right: 1px solid #0080c5;
+			border-bottom-right-radius:0.5em;
+			-moz-border-radius-bottomright:0.5em;
+			border-bottom: 3px solid #0080c5;
+			border-left: 1px solid #0080c5;
+			border-bottom-left-radius:0.5em;
+			-moz-border-radius-bottomleft:0.5em;
+			}
+			.dropdown-header { display: block !imnportant; padding-bottom: 30px; height: 10px; }
+			.login-header { font-size: 20px; font-weight: bold; display: inline; float: left; }
+			.forgot-password { font-size: 10px; display: inline; float: right; vertical-align: bottom; padding-top: 10px; }
+			.center-text { text-align: center; }
+			.error-message { font-size: 11px; }
   body
     nav.navbar.navbar-inverse
-      .container-fluid
-        .navbar-header
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(href='#') Logo
-        #myNavbar.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li.active
-              a(href='#') Home
-            li
-              a(href='#') About
-            li
-              a(href='#') Projects
-            li
-              a(href='#') Contact
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href='#')
-                span.glyphicon.glyphicon-log-in
-                |  Login
+		.container
+		nav.navbar.navbar-default(role='navigation')
+	.container-fluid.navbar-border
+		// Brand and toggle get grouped for better mobile display
+		.navbar-header
+		// Collect the nav links, forms, and other content for toggling
+		#bs-example-navbar-collapse-1.collapse.navbar-collapse
+			ul.nav.navbar-nav.navbar-right
+				li.dropdown
+					a.dropdown-toggle(href='#', data-toggle='dropdown')
+						i.fa.fa-cogs
+						b.color-blue Login
+						span.caret
+					ul.dropdown-menu.login-panel
+						li
+							.dropdown-header
+								span.login-header.color-blue Sign In
+								span.forgot-password.color-blue
+									a(href='') Forgot password?
+							.clearfix
+							div(style='padding: 8px;')
+								form#loginform.form-horizontal(role='form', autocomplete='off')
+									.input-group(style='margin-bottom: 10px')
+										span.input-group-addon
+											i.glyphicon.glyphicon-user.color-blue
+										// USERNAME OR EMAIL ADDRESS
+										input#login-username.form-control(type='text', name='username', value='', placeholder='username or email', pattern='[a-zA-Z0-9]{5,}', title='Minimum 5 letters or numbers.', oninvalid="this.setCustomValidity('Enter User Name Here')", oninput="setCustomValidity('')", required='')
+									.input-group(style='margin-bottom: 10px')
+										span.input-group-addon
+											i.glyphicon.glyphicon-lock.color-blue
+										// PASSWORD
+										input#login-password.form-control(type='password', name='password', placeholder='password', pattern='.{5,}', title='Minmimum 5 letters or numbers.', oninvalid="this.setCustomValidity('Enter a password')", oninput="setCustomValidity('')", required='')
+									.center-text
+										label
+											input#login-remember(type='checkbox', name='remember', value='1')
+											|  Remember me
+									.center-text
+										span.error-message.color-red
+											i.glyphicon.glyphicon-warning-sign
+											|  Username & password don't match!
+									.form-group(style='margin-top:10px')
+										// Button
+										.col-sm-12.controls.center-text
+											a#btn-login.btn.btn-block.btn-success(href='#') Login
     .container-fluid.text-center
       .row.content
         .col-sm-2.sidenav
@@ -76,6 +123,7 @@ html(lang='en')
           p
             a(href='#') Link
         .col-sm-8.text-left
+					block content
           h1 Welcome
           p
             | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
