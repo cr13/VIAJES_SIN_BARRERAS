@@ -16,7 +16,6 @@ describe('Test base de datos Mongo', function() {
       done();
     });
   });
-  
   it('Debería logerme con el usuario creado anteriormente',function(done){
     chai.request(server)
     .post('/apis/login')
@@ -59,5 +58,15 @@ describe('Test base de datos Mongo', function() {
       done();
     });
   });
+
+  it('Deberia no mostrar al usuario IV',function(done){
+    chai.request(server)
+    .get('/apis/usuarios/'+'IV')
+    .end(function(err, res){
+      res.should.have.status(500);
+      res.should.be.json;
+      done();
+    });
+});
 
 });
