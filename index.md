@@ -57,3 +57,37 @@ Los tests se ejecutan con el comando
 ## Ejercicios Tema 2
 
 [Ejercicios](https://github.com/cr13/Ejercicios_IV/blob/master/tema2.md)
+
+## Hito 3
+
+## Despliegue de una aplicación en un PaaS
+
+He utilizado heroku, lo he elegido ya que he aprendido a utilizarlo con los ejercicios del tema 3 y me resultó sencillo de usar.
+
+#### Instalación de Heroku, configuración y sincronización con GitHub y Travis-CI
+
+    sudo apt-get install wget
+    wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    sudo heroku login
+    sudo heroku apps:create --region eu viajessinbarreras
+    sudo heroku addons:create mongolab:sandbox
+    sudo heroku auth:token //clave
+    git push heroku master //nos pedirá usuario(Podemos dejarlo vacio) y la clave que acabamos de generar
+
+    //Si ya tenemos el repositorio creado
+      sudo heroku git:remote -a viajessinbarreras
+      git push heroku master
+
+    sudo heroku ps:scale web=1
+    sudo heroku open
+    sudo heroku logs --tail
+
+Para sincronizar GitHub, Travis-CI y Heroku, desde la aplicación creada en Heroku, pestaña deploy.
+
+![sincronizar](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/sincronizar_zps8ge9kb9l.png)
+
+[Heroku](https://viajessinbarreras.herokuapp.com/)
+
+## Ejercicios Tema 3
+
+[Ejercicios](https://github.com/cr13/Ejercicios_IV/blob/master/tema3.md)
