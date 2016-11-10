@@ -64,7 +64,7 @@ Los tests se ejecutan con el comando
 
 He utilizado heroku, lo he elegido ya que he aprendido a utilizarlo con los ejercicios del tema 3 y me resultó sencillo de usar.
 
-#### Instalación de Heroku, configuración y sincronización con GitHub y Travis-CI
+### Instalación de Heroku, configuración y sincronización con GitHub y Travis-CI
 
     sudo apt-get install wget
     wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
@@ -86,7 +86,7 @@ Para sincronizar GitHub, Travis-CI y Heroku, desde la aplicación creada en Hero
 
 ![sincronizar](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/sincronizar_zps8ge9kb9l.png)
 
-[Heroku](https://viajessinbarreras.herokuapp.com/)
+[Heroku enlace a web en construcción](https://viajessinbarreras.herokuapp.com/)
 
 ## Ejercicios Tema 3
 
