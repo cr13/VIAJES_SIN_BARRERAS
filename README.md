@@ -39,6 +39,7 @@
 He utilizado heroku, lo he elegido ya que he aprendido a utilizarlo con los ejercicios del tema 3 y me resultó sencillo de usar.
 
 Instalación
+
     # Descarga e instalación de Heroku
     sudo apt-get install wget
     wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
