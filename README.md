@@ -30,7 +30,7 @@
 
     npm test
 
-### Documentacón
+### Documentación
 
 [Integración continua](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-2)
 
@@ -38,4 +38,28 @@
 
 He utilizado heroku, lo he elegido ya que he aprendido a utilizarlo con los ejercicios del tema 3 y me resultó sencillo de usar.
 
-Para la instalación ver enlace [Despliegue de una aplicación en un PaaS](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-3)
+Instalación
+    # Descarga e instalación de Heroku
+    sudo apt-get install wget
+    wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    # Nos logueamos en Heroku
+    heroku login
+    # Creamos la aplicación, ponemos la región europea y el nombre que le vamos a asignar a nuestra app.
+    heroku apps:create --region eu viajessinbarreras
+    # Creamos una base de datos mongodb
+    heroku addons:create mongolab:sandbox
+    # Generamos clave para poder subir nuestros archivos a heroku
+    heroku auth:token //clave
+    # Subida de archivos a heroku
+    git push heroku master //nos pedirá usuario(Podemos dejarlo vacio) y la clave que acabamos de generar
+
+    //Si ya tenemos el repositorio creado
+    heroku git:remote -a viajessinbarreras
+    git push heroku master
+    # Ajustamos el tipo de procesos ajustando el número de dinamómetros web a 1
+    heroku ps:scale web=1
+    # Para ver nuestra aplicación en el navegador
+    heroku open
+    # Para ver los posible errores que se puedan dar.
+    heroku logs --tail
+[Despliegue de una aplicación en un PaaS](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-3)
