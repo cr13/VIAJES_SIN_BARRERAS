@@ -71,9 +71,9 @@ Heroku usa el Procfile para saber que tiene que ejecutar. En nuestro caso conten
 
     +web: node app.js
 
-### Instalación de Heroku, configuración y sincronización con GitHub y Travis-CI
+## Instalación de Heroku, configuración y sincronización con GitHub y Travis-CI
 
-# Descarga e instalación de Heroku
+### Descarga e instalación de Heroku
 
     #Instación de Heroku
     sudo apt-get install wget
@@ -99,7 +99,9 @@ Heroku usa el Procfile para saber que tiene que ejecutar. En nuestro caso conten
     # Para ver los posible errores que se puedan dar.
       heroku logs --tail
 
-Para sincronizar GitHub, Travis-CI y Heroku, desde la aplicación creada en Heroku, pestaña deploy.
+### Para sincronizar GitHub, Travis-CI y Heroku.
+
+Desde la aplicación creada en Heroku, pestaña deploy.
 
 ![sincronizar](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/sincronizar_zps8ge9kb9l.png)
 
