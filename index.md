@@ -64,23 +64,40 @@ Los tests se ejecutan con el comando
 
 He utilizado heroku, lo he elegido ya que he aprendido a utilizarlo con los ejercicios del tema 3 y me resultó sencillo de usar.
 
+### Fichero necesario para el despliegue
+
+Para un mayor control y flexibilidad sobre su aplicación se recomienda la creación del fichero Procfile que ha de estar alojado en el directorio ráiz de la aplicación.
+Heroku usa el Procfile para saber que tiene que ejecutar. En nuestro caso contendrá:
+
+    +web: node app.js
+
 ### Instalación de Heroku, configuración y sincronización con GitHub y Travis-CI
 
+# Descarga e instalación de Heroku
+
+    #Instación de Heroku
     sudo apt-get install wget
     wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-    sudo heroku login
-    sudo heroku apps:create --region eu viajessinbarreras
-    sudo heroku addons:create mongolab:sandbox
-    sudo heroku auth:token //clave
-    git push heroku master //nos pedirá usuario(Podemos dejarlo vacio) y la clave que acabamos de generar
+    # Nos logueamos en Heroku
+      heroku login
+    # Creamos la aplicación, ponemos la región europea y el nombre que le vamos a asignar a nuestra app.
+      heroku apps:create --region eu viajessinbarreras
+    # Creamos una base de datos mongodb
+      heroku addons:create mongolab:sandbox
+    # Generamos clave para poder subir nuestros archivos a heroku
+      heroku auth:token //clave
+    # Subida de archivos a heroku
+      git push heroku master //nos pedirá usuario(Podemos dejarlo vacio) y la clave que acabamos de generar
 
     //Si ya tenemos el repositorio creado
-      sudo heroku git:remote -a viajessinbarreras
+      heroku git:remote -a viajessinbarreras
       git push heroku master
-
-    sudo heroku ps:scale web=1
-    sudo heroku open
-    sudo heroku logs --tail
+    # Ajustamos el tipo de procesos ajustando el número de dinamómetros web a 1
+      heroku ps:scale web=1
+    # Para ver nuestra aplicación en el navegador
+      heroku open
+    # Para ver los posible errores que se puedan dar.
+      heroku logs --tail
 
 Para sincronizar GitHub, Travis-CI y Heroku, desde la aplicación creada en Heroku, pestaña deploy.
 
