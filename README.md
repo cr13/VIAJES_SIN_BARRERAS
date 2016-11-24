@@ -38,7 +38,13 @@
 
 He utilizado heroku, lo he elegido ya que he aprendido a utilizarlo con los ejercicios del tema 3 y me resultó sencillo de usar.
 
-Instalación
+### Fichero necesario para el despliegue
+
+Para un mayor control y flexibilidad sobre su aplicación se recomienda la creación del fichero Procfile que ha de estar alojado en el directorio ráiz de la aplicación. Heroku usa el Procfile para saber que tiene que ejecutar. En nuestro caso contendrá:
+
+    +web: node app.js
+
+### Instalación
 
     # Descarga e instalación de Heroku
     sudo apt-get install wget
@@ -63,5 +69,5 @@ Instalación
     heroku open
     # Para ver los posible errores que se puedan dar.
     heroku logs --tail
-[Despliegue de una aplicación en un PaaS](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-3)
- 
+
+[Para más información ](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-3)
