@@ -71,7 +71,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(theport, function() {
-  console.log('Express server listening on port ' + theport);
+   console.log('Express server ' + ip.address() + ' listening on port' + theport);
 });
 
 
