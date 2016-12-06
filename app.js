@@ -32,7 +32,7 @@ app.use('/apis', apis);
 //});
 
 // connect to our database
-var theport = process.env.PORT || 3000;
+var theport = process.env.PORT || 8080;
 mongoose.Promise = global.Promise
 mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost:27017/usuarios');
 mongoose.connection.on('error', function() {
