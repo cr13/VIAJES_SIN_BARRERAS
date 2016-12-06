@@ -26,11 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/apis', apis);
 
-//app.get('/insertartipohab',function(req,res){
-//  var objBD = new BD(res);
-//  objBD.insertaTipoHAb('suite','N');
-//});
-
 // connect to our database
 var theport = process.env.PORT || 8080;
 mongoose.Promise = global.Promise
