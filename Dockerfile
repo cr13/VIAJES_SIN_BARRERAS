@@ -6,7 +6,8 @@ ADD . /models
 ADD . /routes
 
 # Sets the current working directory for subsequent instructions
-WORKDIR /app
+WORKDIR /models
+WORKDIR /routes
 
 RUN npm install
 
