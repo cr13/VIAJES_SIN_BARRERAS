@@ -72,3 +72,5 @@ Para un mayor control y flexibilidad sobre su aplicación se recomienda la creac
 
 [Para más información ](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-3)
 [Página en heroku](https://viajessinbarreras.herokuapp.com/)
+
+## Docker
