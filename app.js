@@ -34,7 +34,7 @@ app.use('/apis', apis);
 // connect to our database
 var theport = process.env.PORT || 8080;
 mongoose.Promise = global.Promise
-mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost:27017/usuarios');
+mongoose.connect( process.env.MONGODB_URI || 'mongodb://' + process.env.MONGODB_PORT_27017_TCP_ADDR + ':' + process.env.MONGODB_PORT_27017_TCP_PORT + '/usuarios');
 mongoose.connection.on('error', function() {
   console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
 });
@@ -71,7 +71,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(theport, function() {
-   console.log('Express server ' + ip.address() + ' listening on port' + theport);
+   console.log('Express server ' + ip.address() + ':' + theport);
 });
 
 

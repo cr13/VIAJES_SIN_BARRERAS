@@ -2,7 +2,7 @@
 
 [![Pruebas en travis](https://travis-ci.org/cr13/VIAJES_SIN_BARRERAS.svg?branch=master)](https://travis-ci.org/cr13/VIAJES_SIN_BARRERAS)
 
-[![Heroku Deploy](https://www.herokucdn.com/deploy/button.svg)](https://viajessinbarreras.herokuapp.com/)
+[![Heroku Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cr13/VIAJES_SIN_BARRERAS)
 
 ## Servicios necesarios
 
@@ -71,3 +71,4 @@ Para un mayor control y flexibilidad sobre su aplicación se recomienda la creac
     heroku logs --tail
 
 [Para más información ](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-3)
+[Página en heroku](https://viajessinbarreras.herokuapp.com/)
