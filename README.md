@@ -115,6 +115,7 @@ Para ejecutar el docker desde la imagen creada en nuestro pc tenemos que:
 Sino tenemos imagen también podemos hacer lo siguiente:
 
     1º Nos clonamos el repositorio
-    2ª Ejecutamos el script docker_local.sh
+    2ª Ejecutamos el script
+        sudo docker_local.sh
 
 [Para más información ](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-4)
