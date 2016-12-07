@@ -110,3 +110,76 @@ Desde la aplicación creada en Heroku, pestaña deploy.
 ## Ejercicios Tema 3
 
 [Ejercicios](https://github.com/cr13/Ejercicios_IV/blob/master/tema3.md)
+
+## Hito 4
+
+##Contenedores para pruebas: Docker
+
+Para el entorno de pruebas se ha utilizado Docker el cual está basado en un sistema de contenedores. Para su uso, he creado dos contenedores uno para el servidor de Node.js y otro para MongoDB. He enlazado los contenedores con el parámetro --link.
+
+Para empezar debemos registrarnos en [dockerHub](https://hub.docker.com/) y vincular con nuestra cuenta de github.
+
+![Vinculamoscuentagithub](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/vinculargitdocker_zpsv0tfl2p1.png)
+
+Pulsamos en **Create Automated Build** y seleccionamos el repositorio de nuestro proyecto, escribimos una descripción y pulsamos en create.
+Una vez creado vamos a sincronizarlo para que con cada push se actualice, para ello nos vamos a  Building Settings y pulsamos el botón Trigger.
+
+### Fichero necesarios
+
+**Dockerfile que contendrá lo siguiente:**
+
+    # Tells the Docker which base image to start.
+    FROM node:latest
+
+    # Adds files from the host file system into the Docker container.
+    ADD . /models
+    ADD . /routes
+
+    # Sets the current working directory for subsequent instructions
+    WORKDIR /models
+    WORKDIR /routes
+
+    RUN npm install
+
+    #expose a port to allow external access
+    EXPOSE 8080
+
+    # Start application
+    CMD ["npm", "start"]
+
+**.dockerignore**
+
+    node_modules
+    bower_components
+    .tmp
+    .env
+
+
+### Docker
+
+Para ejecutar el docker desde la imagen creada en nuestro pc tenemos que:
+
+    //Creamos el contenedor mongoDB
+    sudo docker run -d --name mongoDB mongo
+    //[Descargamos la imagen](https://hub.docker.com/r/cr13/viajes_sin_barreras/) y la instalamos
+    sudo docker pull cr13/viajes_sin_barreras
+    //Enlazamos y ejecutamos los dos contenedores
+    sudo docker run --link=mongoDB:mongodb -it cr13/viajes_sin_barreras
+
+![Funcionamiento](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/dockerimage_zpson6t6cmn.png)
+
+Sino tenemos imagen también podemos hacer lo siguiente:
+
+    1º Nos clonamos el repositorio
+    2ª Ejecutamos el script
+        sudo docker_local.sh
+
+![Funcionamiento](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/dockerlocal_zpszhswicfc.png)
+
+### Issues
+
+[Hito 4](https://github.com/cr13/VIAJES_SIN_BARRERAS/issues/15)
+
+### Ejercicios Tema 4
+
+[Ejercicios](https://github.com/cr13/Ejercicios_IV/blob/master/tema4.md)
