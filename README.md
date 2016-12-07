@@ -103,11 +103,11 @@ Para el entorno de pruebas se ha utilizado Docker el cual está basado en un sis
 
 ### Docker
 
-Para ejecutar el docker desde la imagen creada en nuestro pc tenemos que:
+Para ejecutar el [docker desde la imagen creada](https://hub.docker.com/r/cr13/viajes_sin_barreras/) en nuestro pc tenemos que:
 
     //Creamos el contenedor mongoDB
     sudo docker run -d --name mongoDB mongo
-    //[Descargamos la imagen](https://hub.docker.com/r/cr13/viajes_sin_barreras/) y la instalamos
+    //Descargamos la imagen y la instalamos
     sudo docker pull cr13/viajes_sin_barreras
     //Enlazamos y ejecutamos los dos contenedores
     sudo docker run --link=mongoDB:mongodb -it cr13/viajes_sin_barreras
