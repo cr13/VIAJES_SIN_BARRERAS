@@ -71,6 +71,50 @@ Para un mayor control y flexibilidad sobre su aplicación se recomienda la creac
     heroku logs --tail
 
 [Para más información ](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-3)
+
 [Página en heroku](https://viajessinbarreras.herokuapp.com/)
 
-## Docker
+
+##Contenedores para pruebas: Docker
+
+Para el entorno de pruebas se ha utilizado Docker el cual está basado en un sistema de contenedores. Para su uso, he creado dos contenedores uno para el servidor de Node.js y otro para MongoDB. He enlazado los contenedores con el parámetro --link.
+
+### Fichero necesario Dockerfile que contendrá lo siguiente:
+
+    # Tells the Docker which base image to start.
+    FROM node:latest
+
+    # Adds files from the host file system into the Docker container.
+    ADD . /models
+    ADD . /routes
+
+    # Sets the current working directory for subsequent instructions
+    WORKDIR /models
+    WORKDIR /routes
+
+    RUN npm install
+
+    #expose a port to allow external access
+    EXPOSE 8080
+
+    # Start application
+    CMD ["npm", "start"]
+
+
+### Docker
+
+Para ejecutar el docker desde la imagen creada en nuestro pc tenemos que:
+
+    //Creamos el contenedor mongoDB
+    sudo docker run -d --name mongoDB mongo
+    //[Descargamos la imagen](https://hub.docker.com/r/cr13/viajes_sin_barreras/) y la instalamos
+    sudo docker pull cr13/viajes_sin_barreras
+    //Enlazamos y ejecutamos los dos contenedores
+    sudo docker run --link=mongoDB:mongodb -it cr13/viajes_sin_barreras
+
+Sino tenemos imagen también podemos hacer lo siguiente:
+
+    1º Nos clonamos el repositorio
+    2ª Ejecutamos el script docker_local.sh
+
+[Para más información ](https://cr13.github.io/VIAJES_SIN_BARRERAS/#hito-4)
