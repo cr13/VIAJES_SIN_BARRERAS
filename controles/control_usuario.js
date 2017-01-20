@@ -97,10 +97,14 @@ exports.eliminarBynick = function(req, res) {
 
 //POST - Te confirma si el usuario esta registrado
 exports.login = function(req, res) {
-  modelo_usuario.findOne({username:req.body.username, password:req.body.passwords},function(err,result){
+  modelo_usuario.findOne({username:req.body.username},function(err,result){
     if(err) return res.json(500, { mensaje: 'Error en la Base de datos' });
     if(result==null) return res.json(500, { mensaje: 'Necesita registrarse.' });
-    res.json(200,{mensaje: 'Inicio de sesión con '+req.body.username});
+    console.log(result)
+    if(result.validPassword(req.body.passwords)){
+
+      return res.json(200,{mensaje: 'Inicio de sesión con '+req.body.username});
+    }res.json(500, { mensaje: 'Contraseña incorrecta.' });
   });
 
 

@@ -6,7 +6,7 @@ var userSchema   = new Schema({
   email: String,
   DNI: { type: String, required: true, index: { unique: true }},
 	username: { type: String, required: true, index: { unique: true }},
-	password: { type: String, required: true, select: false },
+	password: { type: String, required: true},
 	role: {
     type: String,
     enum: ['Admin', 'Basic'],
@@ -23,6 +23,7 @@ userSchema.methods.setPassword = function(password){
 
 userSchema.methods.validPassword = function(password) {
   var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+	console.log(hash);
   return this.password === hash;
 };
 module.exports=mongoose.model('usuarios', userSchema);
