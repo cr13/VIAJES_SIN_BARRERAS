@@ -24,6 +24,7 @@
 
     En el directorio ráiz del proyecto
     npm install
+	 sudo service mongod start
     npm start
 
 ### Test

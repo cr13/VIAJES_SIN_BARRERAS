@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var modelo_usuario = require('../models/USUARIOS.js');
+var session = require('express-session');
 
 //GET - Devuelve los datos de todos los usuarios
 exports.findAll = function(req, res) {
@@ -35,13 +36,13 @@ exports.add = function(req, res) {
  var usu = new modelo_usuario({
    name: req.body.name,
    username: req.body.username,
-   password: req.body.passwords,
    email: req.body.email,
    DNI: req.body.dni
  });
-
+ usu.setPassword(req.body.passwords);
  usu.save(function(err, result) {
    if(err) return res.json(500,{mensaje: 'El usuario ya esta registrado'});
+   session.nick=usu.username;
    res.json(200,result);
  });
 };

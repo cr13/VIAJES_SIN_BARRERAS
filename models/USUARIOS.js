@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
+var crypto = require('crypto');
 var userSchema   = new Schema({
 	name: String,
   email: String,
@@ -11,7 +11,18 @@ var userSchema   = new Schema({
     type: String,
     enum: ['Admin', 'Basic'],
     default: 'Basic'
-  }
+  },
+	salt: String
 });
 
+userSchema.methods.setPassword = function(password){
+	console.log(password)
+  this.salt = crypto.randomBytes(16).toString('hex');
+  this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+};
+
+userSchema.methods.validPassword = function(password) {
+  var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+  return this.password === hash;
+};
 module.exports=mongoose.model('usuarios', userSchema);

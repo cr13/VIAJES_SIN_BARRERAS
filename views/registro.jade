@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  .container_Registro
+    form.form-horizontal(role='form', id="registroForm")
+      h2 Registration Form
+      .form-group
+        //label.col-sm-3.control-label(for='nick') Nick
+        .col-sm-9.col-sm-offset-1
+          input#username.form-control(name="username", type='text', placeholder='Nombre de usuario', autofocus='')
+      .form-group
+        //label.col-sm-3.control-label(for='password') Password
+        .col-sm-9.col-sm-offset-1
+          input#password.form-control(name="passwords", type='password', placeholder='Password')
+      .form-group
+        //label.col-sm-3.control-label(for='nick') Nick
+        .col-sm-9.col-sm-offset-1
+          input#name.form-control(name="name", type='text', placeholder='Nombre completo')
+      .form-group
+        //label.col-sm-3.control-label(fautofocusor='dni') DNI
+        .col-sm-9.col-sm-offset-1
+          input#dni.form-control(name="dni", type='text', placeholder='DNI')
+      .form-group
+        //label.col-sm-3.control-label(for='email') Email
+        .col-sm-9.col-sm-offset-1
+          input#email.form-control(name="email", type='email', placeholder='Email')
+      .form-group
+        .col-sm-9.col-sm-offset-1
+          span.help-block
+            | Al hacer clic en «Registrarme», estás aceptando los términos y condiciones la política de privacidad
+        // /.form-group
+      .form-group
+        .col-sm-9.col-sm-offset-1
+          button.btn.btn-primary.btn-block(type='submit') Registrarme
+    // /form
+  // ./container
+block script  
+  script.
+    $(document).ready(function(){
+      $("#registroForm").submit(function(e){
+        e.preventDefault()
+        $.ajax({
+          type:"POST",
+          url:"/apis/usuarios",
+          data:$("#registroForm").serialize(),
+          dataType:"json",
+          success:function(data){
+            window.location.href = "/";
+            alert(JSON.stringify(data))
+          },
+          error:function(data){
+            alert("error "+data.responseJSON.mensaje)
+          }
+          
+        })
+      })
+    })

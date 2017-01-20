@@ -29,7 +29,11 @@ app.use('/apis', apis);
 // connect to our database
 var theport = process.env.PORT || 8080;
 mongoose.Promise = global.Promise
-mongoose.connect( process.env.MONGODB_URI || 'mongodb://' + process.env.MONGODB_PORT_27017_TCP_ADDR + ':' + process.env.MONGODB_PORT_27017_TCP_PORT + '/usuarios');
+var database='mongodb://localhost:27017/db_usuarios'
+if(typeof process.env.MONGODB_PORT_27017_TCP_ADDR != 'undefined'){
+	database='mongodb://' + process.env.MONGODB_PORT_27017_TCP_ADDR + ':' + process.env.MONGODB_PORT_27017_TCP_PORT + '/usuarios'
+}
+mongoose.connect( process.env.MONGODB_URI || database);
 mongoose.connection.on('error', function() {
   console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
 });

@@ -24,7 +24,8 @@
     "sequelize": "^3.24.6",
     "mocha": "^3.1.2",
     "ip": "^1.1.4",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "crypto": "0.0.3"
   },
   "description": "[Pruebas en travis](https://travis-ci.org/cr13/VIAJES_SIN_BARRERAS.svg?branch=master)",
 
