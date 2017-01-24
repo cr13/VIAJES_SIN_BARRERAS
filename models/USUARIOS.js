@@ -12,7 +12,7 @@ var userSchema   = new Schema({
     enum: ['Admin', 'Basic'],
     default: 'Basic'
   },
-	salt: String
+	salt: { type: String}
 });
 
 userSchema.methods.setPassword = function(password){
@@ -22,8 +22,9 @@ userSchema.methods.setPassword = function(password){
 };
 
 userSchema.methods.validPassword = function(password) {
+	this.salt = crypto.randomBytes(16).toString('hex');
   var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
-	console.log(hash);
-  return this.password === hash;
+	//console.log(hash);
+  return this.password == hash;
 };
 module.exports=mongoose.model('usuarios', userSchema);

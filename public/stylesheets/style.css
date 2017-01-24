@@ -16,11 +16,26 @@ border-left: 1px solid #0080c5;
 border-bottom-left-radius:0.5em;
 -moz-border-radius-bottomleft:0.5em;
 }
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.9);
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+
 .dropdown-header { display: block !imnportant; padding-bottom: 30px; height: 10px; }
 .login-header { font-size: 20px; font-weight: bold; display: inline; float: left; }
 .forgot-password { font-size: 10px; display: inline; float: right; vertical-align: bottom; padding-top: 10px; }
 .center-text { text-align: center; }
-.error-message { font-size: 11px; }
+.left-text { text-align: left; }
+.error-message { font-size: 10px; }
 /* Remove the navbar's default margin-bottom and rounded borders */
 .navbar {
 margin-bottom: 0;

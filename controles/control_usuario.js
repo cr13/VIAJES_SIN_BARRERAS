@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var modelo_usuario = require('../models/USUARIOS.js');
-var session = require('express-session');
 
 //GET - Devuelve los datos de todos los usuarios
 exports.findAll = function(req, res) {
@@ -42,7 +41,6 @@ exports.add = function(req, res) {
  usu.setPassword(req.body.passwords);
  usu.save(function(err, result) {
    if(err) return res.json(500,{mensaje: 'El usuario ya esta registrado'});
-   session.nick=usu.username;
    res.json(200,result);
  });
 };
@@ -101,7 +99,8 @@ exports.login = function(req, res) {
     if(err) return res.json(500, { mensaje: 'Error en la Base de datos' });
     if(result==null) return res.json(500, { mensaje: 'Necesita registrarse.' });
     console.log(result)
-    if(result.validPassword(req.body.passwords)){
+    var pass=req.body.passwords
+    if(result.validPassword(pass)){
 
       return res.json(200,{mensaje: 'Inicio de sesión con '+req.body.username});
     }res.json(500, { mensaje: 'Contraseña incorrecta.' });

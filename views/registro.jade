@@ -7,11 +7,11 @@ block content
       .form-group
         //label.col-sm-3.control-label(for='nick') Nick
         .col-sm-9.col-sm-offset-1
-          input#username.form-control(name="username", type='text', placeholder='Nombre de usuario', autofocus='')
+          input#username.form-control(name="username", type='text', placeholder='Nombre de usuario', pattern='[a-zA-Z0-9]{4,}', title='Mínimo 4 letras o números.', autofocus='')
       .form-group
         //label.col-sm-3.control-label(for='password') Password
         .col-sm-9.col-sm-offset-1
-          input#password.form-control(name="passwords", type='password', placeholder='Password')
+          input#password.form-control(name="passwords", type='password', placeholder='Password', pattern='[a-zA-Z0-9]{4,}', title='Mínimo 4 letras o números.')
       .form-group
         //label.col-sm-3.control-label(for='nick') Nick
         .col-sm-9.col-sm-offset-1
@@ -45,8 +45,12 @@ block script
           data:$("#registroForm").serialize(),
           dataType:"json",
           success:function(data){
+            //localStorage.token=data.username;
+            //window.localStorage.setItem('token', data.username);
+            //httpChannel.setRequestHeader("X-Hello", "World", false);
             window.location.href = "/";
-            alert(JSON.stringify(data))
+            $('.dropdown').hide();
+            alert(data.username)
           },
           error:function(data){
             alert("error "+data.responseJSON.mensaje)

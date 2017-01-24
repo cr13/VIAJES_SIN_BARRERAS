@@ -1,10 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var session = require('express-session');
 
+/*var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./scratch');
+*/
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: session.nick });
+  //console.log($localStorage.getItem("list"));
+
+  res.render('index', { title:" viajes sin barreras" });
 });
 
 router.get('/registro', function(req, res, next) {

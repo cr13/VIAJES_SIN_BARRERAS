@@ -26,39 +26,43 @@ html(lang='en')
                 i.fa.fa-cogs
                 b.color-blue Login
                 span.caret
-              ul.dropdown-menu.login-panel
+              ul#login-dp.dropdown-menu.login-panel
                 li
                   .dropdown-header
-                    span.login-header.color-blue Inicia Sesión
+                    span.login-header.color-blue.text-center Inicia Sesión
                     //span.forgot-password.color-blue
-                      a(href='') Forgot password?
+                    //  a(href='') Forgot password?
                   .clearfix
-                  div(style='padding: 8px;')
+                  div
                     form#loginform.form-horizontal(role='form', autocomplete='off')
                       .input-group(style='margin-bottom: 10px')
                         span.input-group-addon
                           i.glyphicon.glyphicon-user.color-blue
                         // USERNAME OR EMAIL ADDRESS
-                        input#login-username.form-control(type='text', name='username', value='', placeholder='username or email', pattern='[a-zA-Z0-9]{5,}', title='Minimum 5 letters or numbers.', oninvalid="this.setCustomValidity('Enter User Name Here')", oninput="setCustomValidity('')", required='')
+                        input#login-username.form-control(type='text', name='username', value='', placeholder='username', pattern='[a-zA-Z0-9]{4,}', title='Mínimo 4 letras o números.', oninvalid="this.setCustomValidity('Enter User Name Here')", oninput="setCustomValidity('')", required='')
                       .input-group(style='margin-bottom: 10px')
                         span.input-group-addon
                           i.glyphicon.glyphicon-lock.color-blue
                         // PASSWORD
-                        input#login-password.form-control(type='password', name='password', placeholder='password', pattern='.{5,}', title='Minmimum 5 letters or numbers.', oninvalid="this.setCustomValidity('Enter a password')", oninput="setCustomValidity('')", required='')
+                        input#login-password.form-control(type='password', name='password', placeholder='password', pattern='.{4,}', title='Mínimo 4 letras o números.', oninvalid="this.setCustomValidity('Enter a password')", oninput="setCustomValidity('')", required='')
                       .center-text
                         label
                           input#login-remember(type='checkbox', name='remember', value='1')
                           |  Recuérdame
-                      .center-text
+                      .left-text
                         span.error-message.color-red
                           i.glyphicon.glyphicon-warning-sign
                           |  ¡El nombre de usuario y la contraseña no coinciden!
                       .form-group(style='margin-top:10px')
                         // Button
                         .col-sm-12.controls.center-text
-                          a#btn-login.btn.btn-block.btn-success(href='#') Iniciar
+                          button#btn-login.btn.btn-block.btn-success(type='submit') Iniciar
                           // <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
                 // <li class="divider"></li>
+                div.bottom.text-center
+                  | ¿Nuevo aquí? 
+                  a(href='/registro')
+                    b Registrate!!
     .container-fluid.text-center
       .row.content
         .col-sm-2.sidenav
@@ -75,4 +79,36 @@ html(lang='en')
       p Copyright 2016 Viajes sin barreras | Todos los derechos reservados
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    block script  
+    block script
+    script.
+      $(document).ready(function(){
+        $(".error-message").hide();
+        $("#loginform").submit(function(e){
+          e.preventDefault()
+          $.ajax({
+            type:"POST",
+            url:"/apis/login",
+            data:$("#loginform").serialize(),
+            dataType:"json",
+            success:function(data){
+              //localStorage.token=data.username;
+              //window.localStorage.setItem('token', data.username);
+              //httpChannel.setRequestHeader("X-Hello", "World", false);
+              window.location.href = "/";
+              $('.dropdown').hide();
+              alert(data.username)
+            },
+            error:function(data){
+              $(".error-message").show();
+              vaciarCampos();
+              alert("error "+data.responseJSON.mensaje)
+            }
+            
+          })
+        })
+      function vaciarCampos(){
+          $("#login-username").val("");
+          $("#login-password").val("");
+          
+        }
+      })
