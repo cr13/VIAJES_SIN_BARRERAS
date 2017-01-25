@@ -22,9 +22,10 @@ userSchema.methods.setPassword = function(password){
 };
 
 userSchema.methods.validPassword = function(password) {
+	console.log(typeof password);
 	//this.salt = crypto.randomBytes(16).toString('hex');
   var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 	//console.log(hash);
-  return this.password == hash;
+  return this.password === hash;
 };
 module.exports=mongoose.model('usuarios', userSchema);

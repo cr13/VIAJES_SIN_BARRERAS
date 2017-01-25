@@ -44,7 +44,7 @@ html(lang='en')
                         span.input-group-addon
                           i.glyphicon.glyphicon-lock.color-blue
                         // PASSWORD
-                        input#login-password.form-control(type='password', name='password', placeholder='password', pattern='.{4,}', title='Mínimo 4 letras o números.', oninvalid="this.setCustomValidity('Enter a password')", oninput="setCustomValidity('')", required='')
+                        input#login-password.form-control(type='password', name='passwords', placeholder='password', pattern='.{4,}', title='Mínimo 4 letras o números.', oninvalid="this.setCustomValidity('Enter a password')", oninput="setCustomValidity('')", required='')
                       .center-text
                         label
                           input#login-remember(type='checkbox', name='remember', value='1')
@@ -94,9 +94,9 @@ html(lang='en')
               //localStorage.token=data.username;
               //window.localStorage.setItem('token', data.username);
               //httpChannel.setRequestHeader("X-Hello", "World", false);
-              window.location.href = "/";
+              
               $('.dropdown').hide();
-              alert(data.username)
+              alert(data.mensaje)
             },
             error:function(data){
               $(".error-message").show();
