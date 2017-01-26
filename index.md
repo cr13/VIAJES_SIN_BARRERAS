@@ -183,3 +183,61 @@ Sino tenemos imagen también podemos hacer lo siguiente:
 ### Ejercicios Tema 4
 
 [Ejercicios](https://github.com/cr13/Ejercicios_IV/blob/master/tema4.md)
+
+
+## Hito 5
+
+## Diseño del soporte virtual para el despliegue de una aplicación
+
+El despliegue de la aplicación en un IaaS lo voy hacer en Azure usando Vagrant para la creación de máquinas virtuales, y Ansible para el provisionamiento de dichas máquinas virtuales.
+
+  * Para configurar nuestra cuenta de azure correctamente:
+
+    1- Descargamos e instalamos la ultima versión de [vagrant](https://releases.hashicorp.com/vagrant/1.9.1/vagrant_1.9.1_x86_64.deb)
+
+    2- Instalamos el provisionador azure para vagrant
+
+        vagrant plugin install vagrant-azure --plugin-version '2.0.0.pre1'
+
+    3- Instalamos azure
+
+        npm -g install azure
+
+    4- Ahora tenemos que loguearnos y conseguir la información de las credenciales de Azure [más info](https://docs.microsoft.com/en-us/azure/xplat-cli-connect)
+
+        azure login
+
+      Para descargar el archivo de configuración de publicación de su cuenta, asegúrese de que la CLI esté en el modo Gestión de servicios
+
+        azure config mode asm --> activar modo gestión de servicios
+        azure account download --> descargamos el archivo publishSettings
+
+        //Importar el archivo publishSettings
+
+        azure account import Evaluación\ gratuita-1-26-2017-credentials.publishsettings
+
+    5- Generamos los certificados que se van a subir a Azure:
+
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout azurevagrant.key -out azurevagrant.key
+        chmod 600 azurevagrant.key
+        openssl x509 -inform pem -in azurevagrant.key -outform der -out azurevagrant.cer
+
+      ![as](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/certificadosazure_zpsglhu8n8f.png)
+
+    6- Subimos el archivo azurevagrant.cer a Azure [+info](https://docs.microsoft.com/es-es/azure/cloud-services/cloud-services-configure-ssl-certificate):
+
+      - Inicie sesión en el [Portal de Azure clásico](http://manage.windowsazure.com/).
+      - Configuración --> CERTIFICADOS DE ADMINISTRACIÓN --> cargar y elegimos el archivo azurevagrant.cer creado anteriomente
+
+      ![subiendo cer](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/subirCERazure_zps9nxtocgn.png)
+
+
+
+### Issues
+
+[Hito 5]()
+
+### Ejercicios Temas 5 y 6
+
+[Ejercicios tema 5](https://github.com/cr13/Ejercicios_IV/blob/master/tema5.md)
+[Ejercicios tema 6](https://github.com/cr13/Ejercicios_IV/blob/master/tema6.md)
