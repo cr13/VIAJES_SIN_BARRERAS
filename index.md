@@ -235,7 +235,7 @@ El despliegue de la aplicación en un IaaS lo voy hacer en Azure usando Vagrant 
 
 ### Issues
 
-[Hito 5]()
+[Hito 5](https://github.com/cr13/VIAJES_SIN_BARRERAS/issues/16)
 
 ### Ejercicios Temas 5 y 6
 
