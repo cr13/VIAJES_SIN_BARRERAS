@@ -231,6 +231,64 @@ El despliegue de la aplicación en un IaaS lo voy hacer en Azure usando Vagrant 
 
       ![subiendo cer](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/subirCERazure_zps9nxtocgn.png)
 
+    7- Creamos el archivo vars.yml que contendra las variables con las que vamos a trabajar.
+
+```yml
+
+#Credenciales de azure
+
+# Ruta absoluta del certificado de azure, previamente generado
+mgmt_certificate_path: /path/to/azure_file.pem
+
+# id de la subscripción de azure, necesario para la creación de la MV                  
+subscription_id: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+
+# Datos de la máquina virtual que será creada
+
+# Nombre de la MV
+vm_name: nombre_maquina
+
+# Nombre de usuario de la MV
+vm_user: usuario_maquina
+
+# Contraseña de la MV
+vm_password: *******
+
+
+#Variables de entorno de la app
+# Clave secreta (SECRET_KEY)
+SECRET_KEY: *******
+
+# URL de la base de datos postgres
+DATABASE_URL: postgres://<USER>:<PASSWORD>@<HOST>:<PORT>/<DBNAME>
+
+
+# Variable de entorno que indica que el entorno es de producción
+EN_PROD: 1
+
+# Variables para el despliegue
+project_name: VIAJES_SIN_BARRERAS
+project_repo: https://github.com/cr13/VIAJES_SIN_BARRERAS/
+install_root: /srv
+static_root: "{{ install_root }}/{{ project_name }}/static"
+#wsgi_module: 
+
+
+# Dirección del servidor
+server_name: "{{ vm_name }}.cloudapp.net www.{{ vm_name }}.cloudapp.net"
+
+
+# Dependencias del sistema
+system_packages:
+- git
+- gunicorn
+- python-setuptools
+- python-dev
+- build-essential
+- python-pip
+- libpq-dev
+
+```
 
 
 ### Issues
