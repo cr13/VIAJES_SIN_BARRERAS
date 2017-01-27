@@ -8,7 +8,9 @@ var routes = require('./routes/index');
 var apis = require('./routes/apis');
 var mongoose = require('mongoose');
 var ip = require('ip');
+var passport = require('passport');
 
+require('./config/passport');
 var app = express();
 
 // view engine setup
@@ -22,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(passport.initialize());
 app.use('/', routes);
 app.use('/apis', apis);
 

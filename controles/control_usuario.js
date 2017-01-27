@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var modelo_usuario = require('../models/USUARIOS.js');
-
+var passport = require('passport');
 //GET - Devuelve los datos de todos los usuarios
 exports.findAll = function(req, res) {
  modelo_usuario.find(function(err, result) {
@@ -32,6 +32,7 @@ exports.findByDNI = function(req, res) {
 
 //POST - Insertar nuevo usuario
 exports.add = function(req, res) {
+  console.log(req.headers)
  var usu = new modelo_usuario({
    name: req.body.name,
    username: req.body.username,
@@ -41,7 +42,12 @@ exports.add = function(req, res) {
  usu.setPassword(req.body.passwords);
  usu.save(function(err, result) {
    if(err) return res.json(500,{mensaje: 'El usuario ya esta registrado'});
-   res.json(200,result);
+   var token;
+    token = result.generarToken();
+    res.status(200);
+    res.json({
+      "token" : token
+    });
  });
 };
 
@@ -102,10 +108,34 @@ exports.login = function(req, res) {
     var pass=req.body.passwords
     if(result.validPassword(pass)){
 
-      return res.json(200,{mensaje: 'Inicio de sesión con '+req.body.username});
+      return res.json(200,{'token' : result.generarToken()});
     }res.json(500, { mensaje: 'Contraseña incorrecta.' });
   });
-
-
-
 };
+/*
+  passport.authenticate('local', function(err, user, info){
+     var token;
+
+     // Si passport tiene algun error
+     if (err) {
+       res.status(404).json(err);
+       return;
+     }
+
+     // Si el usuario existe
+     if(user){
+       token = user.generarToken();
+       res.status(200);
+       res.json({
+         "token" : token
+       });
+     } else {
+       // Si el usuario no existe
+       res.status(401).json(info);
+     }
+   })(req, res);
+
+
+
+
+};*/

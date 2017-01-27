@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
+var jwt = require ('jsonwebtoken')
 var userSchema   = new Schema({
 	name: String,
   email: String,
@@ -28,4 +29,14 @@ userSchema.methods.validPassword = function(password) {
 	//console.log(hash);
   return this.password === hash;
 };
+userSchema.methods.generarToken=function(){
+	var caducidad=new Date()
+	caducidad.setDate(caducidad.getDate()+7)
+	return jwt.sign({
+		_id: this._id,
+		name: this.name,
+		email: this.email,
+		exp: parseInt(caducidad.getTime()/1000),
+	},"UnaClave")
+}
 module.exports=mongoose.model('usuarios', userSchema);

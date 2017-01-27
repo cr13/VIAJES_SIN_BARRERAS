@@ -82,6 +82,7 @@ html(lang='en')
     block script
     script.
       $(document).ready(function(){
+        logeado();
         $(".error-message").hide();
         $("#loginform").submit(function(e){
           e.preventDefault()
@@ -92,11 +93,10 @@ html(lang='en')
             dataType:"json",
             success:function(data){
               //localStorage.token=data.username;
-              //window.localStorage.setItem('token', data.username);
+              window.localStorage.setItem('token', data.token);
               //httpChannel.setRequestHeader("X-Hello", "World", false);
+              logeado();
               
-              $('.dropdown').hide();
-              alert(data.mensaje)
             },
             error:function(data){
               $(".error-message").show();
@@ -106,9 +106,19 @@ html(lang='en')
             
           })
         })
-      function vaciarCampos(){
-          $("#login-username").val("");
-          $("#login-password").val("");
-          
+        function vaciarCampos(){
+            $("#login-username").val("");
+            $("#login-password").val("");
+            
+          }
+        function logeado(){
+          var token = window.localStorage.getItem('token');
+          if(token!= null){
+            $('.dropdown').hide();
+            var payload = token.split('.')[1];
+            payload = window.atob(payload);
+            payload = JSON.parse(payload);
+            alert(JSON.stringify(payload));
+          }
         }
       })

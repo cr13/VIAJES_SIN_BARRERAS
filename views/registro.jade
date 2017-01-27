@@ -37,6 +37,7 @@ block content
 block script  
   script.
     $(document).ready(function(){
+    
       $("#registroForm").submit(function(e){
         e.preventDefault()
         $.ajax({
@@ -46,7 +47,7 @@ block script
           dataType:"json",
           success:function(data){
             //localStorage.token=data.username;
-            //window.localStorage.setItem('token', data.username);
+            window.localStorage.setItem('token', data.username);
             //httpChannel.setRequestHeader("X-Hello", "World", false);
             window.location.href = "/";
             $('.dropdown').hide();
