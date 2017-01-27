@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var modelo_usuario = require('../models/USUARIOS.js');
-var passport = require('passport');
+
 //GET - Devuelve los datos de todos los usuarios
 exports.findAll = function(req, res) {
  modelo_usuario.find(function(err, result) {
