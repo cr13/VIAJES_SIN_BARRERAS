@@ -4,6 +4,9 @@
 
 [![Heroku Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cr13/VIAJES_SIN_BARRERAS)
 
+[![Azure](http://azuredeploy.net/deploybutton.png)](http://maquinaavm-service-xuybo.cloudapp.net
+)
+
 ## Servicios necesarios
 
 - Dos servidores de base de datos,en uno almacenare todo lo referente a hoteles y en el otro almacenaré los usuarios registrados y sus correspondientes datos, mediante se vaya desarrollando se estudiara posibilidad de añadir más bases de datos.
