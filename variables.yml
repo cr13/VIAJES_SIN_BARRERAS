@@ -1,0 +1,43 @@
+---
+
+#Credenciales de azure
+# id del inquilino de azure, necesario para la creación de la MV
+AZURE_TENANT_ID: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+
+# id de la cliente de azure, necesario para la creación de la MV
+AZURE_CLIENT_ID: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+
+# clave secreta de azure, necesario para la creación de la MV
+AZURE_CLIENT_SECRET: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+
+# id de la subscripción de azure, necesario para la creación de la MV
+AZURE_SUBSCRIPTION_ID: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+
+# Datos de la máquina virtual que será creada
+
+# Nombre de la MV
+vm_name: nombre_maquina
+
+# Contraseña de la MV
+vm_password: *******
+
+# Variable de entorno que indica que el entorno es de producción
+EN_PROD: 1
+
+# Variables para el despliegue
+project_name: Nombre_del_proyecto
+project_repo: Enlace_al_repositorio_github
+project_path: Nombre_carpeta_almacenamiento_proyecto
+
+# Dirección del servidor
+server_name: "{{ vm_name }}.cloudapp.net www.{{ vm_name }}.cloudapp.net"
+
+# Dependencias del sistema
+system_packages:
+  - git
+  - nodejs
+  - mongodb
+  - npm
+  - build-essential
+  - libpq-dev
+  - mocha

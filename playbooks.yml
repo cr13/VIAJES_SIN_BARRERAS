@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  remote_user: vagrant
+  vars_files:
+    - variables.yml
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Instalar paquetes del sistema
+      apt: pkg={{ item }} update-cache=yes cache_valid_time=3600
+      with_items: "{{ system_packages }}"
+    - name: Obtener aplicacion git
+      git: repo={{ project_repo }}  dest={{ project_path }} clone=yes force=yes
+    - name: Run npm install
+      npm: path={{ project_path }}
