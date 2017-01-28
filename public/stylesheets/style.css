@@ -5,9 +5,14 @@ body{
 .color-red{color: #FF0000;}
 .color-green{color: #6cbc42;}
 .color-blue{color: #0080c5;}
-
+.color-light{color: #F1EEED;}
 /*NAVBAR STYLES*/
 .navbar-border{border-bottom: solid 5px #0080c5;}
+.namebar{
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+}
 .login-panel {
 min-width: 250px;
 border-top: 14px solid #0080c5;

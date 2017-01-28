@@ -47,11 +47,11 @@ block script
           dataType:"json",
           success:function(data){
             //localStorage.token=data.username;
-            window.localStorage.setItem('token', data.username);
+            window.localStorage.setItem('token', data.token);
             //httpChannel.setRequestHeader("X-Hello", "World", false);
             window.location.href = "/";
             $('.dropdown').hide();
-            alert(data.username)
+            //alert(data.username)
           },
           error:function(data){
             alert("error "+data.responseJSON.mensaje)

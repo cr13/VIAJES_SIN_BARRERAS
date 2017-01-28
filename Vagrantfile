@@ -28,7 +28,8 @@ Vagrant.configure('2') do |config|
     azure.location = 'westeurope'
     azure.vm_name = configs['vm_name']
     azure.vm_password = configs['vm_password']
-    azure.tcp_endpoints = '80:80'
+    azure.resource_group_name= configs['vm_name_group']
+	  azure.tcp_endpoints = '80:80'
 
     azure.tenant_id = configs['AZURE_TENANT_ID']
     azure.client_id = configs['AZURE_CLIENT_ID']

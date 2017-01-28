@@ -34,7 +34,8 @@ userSchema.methods.generarToken=function(){
 	caducidad.setDate(caducidad.getDate()+7)
 	return jwt.sign({
 		_id: this._id,
-		name: this.name,
+		nick: this.name,
+		name: this.username,
 		email: this.email,
 		exp: parseInt(caducidad.getTime()/1000),
 	},"UnaClave")

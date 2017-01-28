@@ -1,7 +1,7 @@
 ---
 
-#Credenciales de azure
-# id del inquilino de azure, necesario para la creación de la MV
+#Credenciales de azure (Estás son las que hemos ido copiando en el paso anterior)
+# id del directorio de azure, necesario para la creación de la MV
 AZURE_TENANT_ID: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
 
 # id de la cliente de azure, necesario para la creación de la MV
@@ -21,6 +21,9 @@ vm_name: nombre_maquina
 # Contraseña de la MV
 vm_password: *******
 
+# Nombre del grupo MV
+vm_name_group: nombre_grupo_maquina
+
 # Variable de entorno que indica que el entorno es de producción
 EN_PROD: 1
 
@@ -35,7 +38,7 @@ server_name: "{{ vm_name }}.cloudapp.net www.{{ vm_name }}.cloudapp.net"
 # Dependencias del sistema
 system_packages:
   - git
-  - nodejs
+  - nodejs-legacy
   - mongodb
   - npm
   - build-essential

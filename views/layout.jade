@@ -21,7 +21,13 @@ html(lang='en')
             .center-text
               a.navbar-brand(href='#') Viajes sin barreras
           ul.nav.navbar-nav.navbar-right
-            li.dropdown
+            li.dropdown.namebar
+                b#Namelogueado.color-light 
+            li#logoutdiv.dropdown
+              a#logout.dropdown-toggle(href='#')
+                i.fa.fa-cogs
+                b Cerrar sesión
+            li#login.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 i.fa.fa-cogs
                 b.color-blue Login
@@ -52,7 +58,7 @@ html(lang='en')
                       .left-text
                         span.error-message.color-red
                           i.glyphicon.glyphicon-warning-sign
-                          |  ¡El nombre de usuario y la contraseña no coinciden!
+                          |  ¡El nombre de usuario y la contraseña no existen!
                       .form-group(style='margin-top:10px')
                         // Button
                         .col-sm-12.controls.center-text
@@ -114,11 +120,19 @@ html(lang='en')
         function logeado(){
           var token = window.localStorage.getItem('token');
           if(token!= null){
-            $('.dropdown').hide();
+            $('#login').hide();
             var payload = token.split('.')[1];
             payload = window.atob(payload);
             payload = JSON.parse(payload);
-            alert(JSON.stringify(payload));
+            //alert(JSON.stringify(payload));
+            $('#Namelogueado').text('Bienvenido '+JSON.stringify(payload.name))
+            $('#Namelogueado').show();
           }
         }
+        $('#logout').click(function() {
+            window.localStorage.removeItem('token');
+            $('#Namelogueado').hide();
+            $('#logoutdiv').hide();
+            $('#login').show();            
+        })
       })
