@@ -189,11 +189,13 @@ Sino tenemos imagen también podemos hacer lo siguiente:
 
 ## Diseño del soporte virtual para el despliegue de una aplicación
 
-El despliegue de la aplicación en un IaaS lo voy hacer en Azure usando Vagrant para la creación de máquinas virtuales, y Ansible para el provisionamiento de dichas máquinas virtuales.
+El despliegue de la aplicación en un IaaS lo voy hacer en Azure usando Vagrant para la creación de máquinas virtuales, y utilizando las playbook de Ansible para el provisionamiento de dichas máquinas virtuales y para el despligue vamos a utilizar Fabric.
 
-  * Para configurar nuestra cuenta de azure correctamente:
+#### Configuración Azure
 
-    1- Descargamos e instalamos la ultima versión de [vagrant](https://releases.hashicorp.com/vagrant/1.9.1/vagrant_1.9.1_x86_64.deb)
+Suponiendo que ya estamos registrados en azure vamos a realizar los siguientes pasos:
+
+    1- Descargamos e instalamos la ultima versión de [vagrant](https://releases.hashicorp.com/vagrant/1.9.1/vagrant_1.9.1_x86_64.deb) y también necesitaremos el [virtualbox](https://www.virtualbox.org/wiki/Downloads)
 
     2- Instalamos el provisionador azure para vagrant
 
@@ -201,7 +203,7 @@ El despliegue de la aplicación en un IaaS lo voy hacer en Azure usando Vagrant 
 
     3- Instalamos azure
 
-        npm -g install azure
+        npm install -g azure
 
     4- Ahora tenemos que loguearnos y conseguir la información de las credenciales de Azure [más info](https://docs.microsoft.com/en-us/azure/xplat-cli-connect)
 
@@ -231,65 +233,182 @@ El despliegue de la aplicación en un IaaS lo voy hacer en Azure usando Vagrant 
 
       ![subiendo cer](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/subirCERazure_zps9nxtocgn.png)
 
-    7- Creamos el archivo vars.yml que contendra las variables con las que vamos a trabajar.
+    7- Registro de la aplicación en Azure, para ello nos vamos al [portal de Azure](https://portal.azure.com/)
+
+      - Menú --> Azure Active Directory --> en el menú del Directorio predeterminado --> Registros de aplicaciones -->Agregar --> completamos el formulario y pulsamos en crear
+
+        ![registro nueva app](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/registronewapp_zpstnztcui6.png)
+
+      - Una vez creada, clicamos en la aplicación y se nos abre una ventana de información ahí tenemos el Id. de aplicación(AZURE_CLIENT_ID) y el Id. de objeto (AZURE_TENANT_ID). También se abre una ventana de configuración en la que vamos a crear los ACCESO DE API:
+
+        - Primero le damos permisos(Agregar --> elegimos nuestra api --> establecemos permisos y Listo)
+        - Segundo y último generamos la clave (Ponemos una descripción --> fecha de expiración --> guardamos y copiamos la clave generada(AZURE_CLIENT_SECRET))
+
+      - Todos estos [Ids](https://www.terraform.io/docs/providers/azurerm/) nos van ha servir para la creación de la MV en Azure.
+      - Nos faltaría el id de subscripción(AZURE_SUBSCRIPTION_ID) que se obtiene con **login account list**
+
+#### Creación de la máquina virtual
+
+Para la creación de la máquina virtual en Azure voy ha usar Vagrant y playbook-ansible. Para Vagrant se usa el archivo Vagrantfile y para ansible el archivo playbooks.yml.
+
+* Antes de nada vamos a crear el archivo variables.yml que contendra todas las variables con las que vamos a trabajar.
 
 ```yml
 
-#Credenciales de azure
+#Credenciales de azure (Estás son las que hemos ido copiando en el paso anterior)
+# id del inquilino de azure, necesario para la creación de la MV
+AZURE_TENANT_ID: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
 
-# Ruta absoluta del certificado de azure, previamente generado
-mgmt_certificate_path: /path/to/azure_file.pem
+# id de la cliente de azure, necesario para la creación de la MV
+AZURE_CLIENT_ID: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
 
-# id de la subscripción de azure, necesario para la creación de la MV                  
-subscription_id: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+# clave secreta de azure, necesario para la creación de la MV
+AZURE_CLIENT_SECRET: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
+
+# id de la subscripción de azure, necesario para la creación de la MV
+AZURE_SUBSCRIPTION_ID: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
 
 # Datos de la máquina virtual que será creada
 
 # Nombre de la MV
 vm_name: nombre_maquina
 
-# Nombre de usuario de la MV
-vm_user: usuario_maquina
-
 # Contraseña de la MV
 vm_password: *******
-
-
-#Variables de entorno de la app
-# Clave secreta (SECRET_KEY)
-SECRET_KEY: *******
-
-# URL de la base de datos postgres
-DATABASE_URL: postgres://<USER>:<PASSWORD>@<HOST>:<PORT>/<DBNAME>
-
 
 # Variable de entorno que indica que el entorno es de producción
 EN_PROD: 1
 
 # Variables para el despliegue
-project_name: VIAJES_SIN_BARRERAS
-project_repo: https://github.com/cr13/VIAJES_SIN_BARRERAS/
-install_root: /srv
-static_root: "{{ install_root }}/{{ project_name }}/static"
-#wsgi_module: 
-
+project_name: Nombre_del_proyecto
+project_repo: Enlace_al_repositorio_github
+project_path: Nombre_carpeta_almacenamiento_proyecto
 
 # Dirección del servidor
 server_name: "{{ vm_name }}.cloudapp.net www.{{ vm_name }}.cloudapp.net"
 
-
 # Dependencias del sistema
 system_packages:
-- git
-- gunicorn
-- python-setuptools
-- python-dev
-- build-essential
-- python-pip
-- libpq-dev
+  - git
+  - nodejs
+  - mongodb
+  - npm
+  - build-essential
+  - libpq-dev
+  - mocha
+
+```
+* Una vez hecho esto creamos el playbooks.yml donde indicamos que provisione la máquina usando el playbook de ansible:
+
+```yml
+---
+
+- hosts: all
+  remote_user: vagrant
+  vars_files:
+    - variables.yml
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Instalar paquetes del sistema
+      apt: pkg={{ item }} update-cache=yes cache_valid_time=3600
+      with_items: "{{ system_packages }}"
+    - name: Obtener aplicacion git
+      git: repo={{ project_repo }}  dest={{ project_path }} clone=yes force=yes
+    - name: Run npm install
+      npm: path={{ project_path }}
 
 ```
 
+* Creamos el archivo ansible.cfg para evitar los errores que se pueden producir con cadenas demasiado largas que se usan durante el provisionamiento.
+
+```
+[ssh_connection]
+control_path = %(directory)s/%%h-%%p-%%r
+
+```
+
+* Por último creamos el Vagrantfile
+
+```Vagrantfile
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+require 'yaml'
+
+current_dir    = File.dirname(File.expand_path(__FILE__))
+configs        = YAML.load_file("#{current_dir}/variables.yml")
+
+Vagrant.configure('2') do |config|
+  config.vm.box = 'azure'
+  config.vm.box_url = 'https://github.com/msopentech/vagrant-azure/raw/master/dummy.box' #Caja base vacía
+  config.vm.network "private_network",ip: "192.168.50.4", virtualbox__intnet: "vboxnet0" #Ip privada
+  config.vm.hostname = "localhost"
+  config.vm.network "forwarded_port", guest: 80, host: 80
+
+  config.vm.provider :azure do |azure, override|
+
+    config.ssh.private_key_path = '~/.ssh/id_rsa'
+    azure.vm_image_urn = 'canonical:UbuntuServer:16.04-LTS:16.04.201701130' #Imagen base del sistema
+    azure.vm_size = 'Basic_A0' #Tamaño (recursos) de la MV
+    azure.location = 'westeurope'
+    azure.vm_name = configs['vm_name']
+    azure.vm_password = configs['vm_password']
+    azure.tcp_endpoints = '80:80'
+
+    azure.tenant_id = configs['AZURE_TENANT_ID']
+    azure.client_id = configs['AZURE_CLIENT_ID']
+    azure.client_secret = configs['AZURE_CLIENT_SECRET']
+    azure.subscription_id = configs['AZURE_SUBSCRIPTION_ID']
+
+  end
+
+  # Provisionar con ansible
+  config.vm.provision "ansible" do |ansible|
+    ansible.sudo = true
+    ansible.playbook = "playbooks.yml"
+    ansible.verbose = "-vvvv"
+    ansible.host_key_checking = false
+  end
+
+end
+
+
+```
+Descripción del contenido
+
+1. Cargamos el archivo variables.yml
+2. Indicamos la box que debe usar, así com la red privada que tendrá, además de la redirección de puertos.
+3. Indicamos los datos del usuario que quiere desplegar la aplicación, indicamos donde está el certificado, así como nuestro identificadores que extraimos anteriormente, la imagen de SO que queremos que use la máquina virtual y contraseña.
+4. Método de provisionamiento.
+
+Una vez creado y configurados estos cuatro archivo ejecutamos:
+
+    vagrant up --provider=azure
+
+Si creamos la máquina y modificamos el playbooks.yml podemos actualizar con:
+
+    vagrant provision
+
+Para conectar a nuestra máquina
+
+    vagrant ssh
+
+Para eliminar la máquina virtual:
+
+    vagrant destroy
+
+Resultados de la ejecución del vagrantfile:
+
+  ![Imagen 1][1] Ejecución el playbook de ansible ![Imagen 2][2]
+
+   [1]: http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/creacionMV_zps90rsxz7m.png
+   [2]: http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/playbook-ansible_zpsbxy3a92l.png
+
+#### Despligue
+
+Para desplegar la aplicación vamos a usar Fabric
 
 ### Issues
 
@@ -298,4 +417,5 @@ system_packages:
 ### Ejercicios Temas 5 y 6
 
 [Ejercicios tema 5](https://github.com/cr13/Ejercicios_IV/blob/master/tema5.md)
+
 [Ejercicios tema 6](https://github.com/cr13/Ejercicios_IV/blob/master/tema6.md)
