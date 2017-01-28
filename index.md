@@ -191,7 +191,7 @@ Sino tenemos imagen también podemos hacer lo siguiente:
 
 El despliegue de la aplicación en un IaaS lo voy hacer en Azure usando Vagrant para la creación de máquinas virtuales, y utilizando las playbook de Ansible para el provisionamiento de dichas máquinas virtuales y para el despligue vamos a utilizar Fabric.
 
-#### Configuración Azure
+### Configuración Azure
 
 Suponiendo que ya estamos registrados en azure vamos a realizar los siguientes pasos:
 
@@ -239,15 +239,17 @@ Suponiendo que ya estamos registrados en azure vamos a realizar los siguientes p
 
         ![registro nueva app](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/registronewapp_zpstnztcui6.png)
 
-      - Una vez creada, clicamos en la aplicación y se nos abre una ventana de información ahí tenemos el Id. de aplicación(AZURE_CLIENT_ID) y el Id. de objeto (AZURE_TENANT_ID). También se abre una ventana de configuración en la que vamos a crear los ACCESO DE API:
-
-        - Primero le damos permisos(Agregar --> elegimos nuestra api --> establecemos permisos y Listo)
-        - Segundo y último generamos la clave (Ponemos una descripción --> fecha de expiración --> guardamos y copiamos la clave generada(AZURE_CLIENT_SECRET))
-
-      - Todos estos [Ids](https://www.terraform.io/docs/providers/azurerm/) nos van ha servir para la creación de la MV en Azure.
+      - Una vez creada, clicamos en la aplicación y se nos abre una ventana de información ahí tenemos el Id. de aplicación(AZURE_CLIENT_ID). También se abre una ventana de configuración en la que vamos a crear los ACCESO DE API:
+        - Generamos la clave (Ponemos una descripción --> fecha de expiración --> guardamos y copiamos la clave generada(AZURE_CLIENT_SECRET))
+      - Id. de directorio (AZURE_TENANT_ID) Menú --> Azure Active Directory --> en el menú del Directorio predeterminado --> propiedades
       - Nos faltaría el id de subscripción(AZURE_SUBSCRIPTION_ID) que se obtiene con **login account list**
+      - Todos estos [Ids](https://www.terraform.io/docs/providers/azurerm/) nos van ha servir para la creación de la MV en Azure.
 
-#### Creación de la máquina virtual
+    8- Le damos permisos a nuestra aplicación para que pueda crearse la máquina virtual desde Vagrant.
+
+      - Menú --> Más servicios --> Suscripciones (elegimos nuestra suscripción) --> Control de acceso (IAM) --> Agregar (elegimos un rol y buscamos nuestra aplicación --> seleccionamos y aceptamos )
+
+### Creación de la máquina virtual
 
 Para la creación de la máquina virtual en Azure voy ha usar Vagrant y playbook-ansible. Para Vagrant se usa el archivo Vagrantfile y para ansible el archivo playbooks.yml.
 
@@ -256,7 +258,7 @@ Para la creación de la máquina virtual en Azure voy ha usar Vagrant y playbook
 ```yml
 
 #Credenciales de azure (Estás son las que hemos ido copiando en el paso anterior)
-# id del inquilino de azure, necesario para la creación de la MV
+# id del directorio de azure, necesario para la creación de la MV
 AZURE_TENANT_ID: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX
 
 # id de la cliente de azure, necesario para la creación de la MV
@@ -275,6 +277,9 @@ vm_name: nombre_maquina
 
 # Contraseña de la MV
 vm_password: *******
+
+# Nombre del grupo MV
+vm_name_group: nombre_grupo_maquina
 
 # Variable de entorno que indica que el entorno es de producción
 EN_PROD: 1
@@ -355,6 +360,8 @@ Vagrant.configure('2') do |config|
     azure.location = 'westeurope'
     azure.vm_name = configs['vm_name']
     azure.vm_password = configs['vm_password']
+    azure.resource_group_name= configs['vm_name_group']
+    azure.virtual_network_name= configs['vm_name_group']
     azure.tcp_endpoints = '80:80'
 
     azure.tenant_id = configs['AZURE_TENANT_ID']
@@ -406,9 +413,58 @@ Resultados de la ejecución del vagrantfile:
    [1]: http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/creacionMV_zps90rsxz7m.png
    [2]: http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/playbook-ansible_zpsbxy3a92l.png
 
-#### Despligue
+### Despligue
+
+Aunque le hayamos especificado en el Vagrantfile el puerto HTTP (80) debe estar abierto, es posible que no lo esté.
+Para solucionarlos nos vamos al [portal de Azure](https://portal.azure.com/), una vez en el portal:
+  - Menú --> Máquinas virtuales
+    - Pinchamos en el **Grupo de recursos** de la maquina a la que queremos abrir el puerto
+    - Ahora en información general nos aparecen 6 elementos pinchamos en el que tiene tipo **Grupo de seguridad de red**
+    - ulsamos en Reglas de seguridad de entrada --> Agregar --> rellenamos los campos y guardamos
+
+Si queremos cambiar el nombre de dominio a nuestro proyecto tenemos:
+  - Desde el [portal de Azure](https://portal.azure.com/)
+  - Menú --> Máquinas virtuales
+  - Pinchamos en el **Grupo de recursos** de la maquina a la que queremos cambiar el DNS
+  - Ahora en información general nos aparecen 6 elementos pinchamos en el que tiene tipo **Dirección IP pública**
+  - Vamos a Configuración --> Cambiamos Etiqueta de nombre DNS y guardamos
 
 Para desplegar la aplicación vamos a usar Fabric
+
+Para esto vamos a crear el archivo [fabfile.py](https://github.com/cr13/VIAJES_SIN_BARRERAS/blob/master/fabfile.py) que contiene diferentes funciones que serán las encargadas de realizar el proceso que deseamos remotamente.
+
+Las posibles funciones que contiene el fichero son:
+
+    install: para instalar forever.
+
+    run_app: para ejecutar la aplicación
+
+    run_test: para ejecutar test de la BD
+
+    stop: para la ejecición de la aplicación
+
+    restart: reinicia la ejecución de la aplicación
+
+    pull: para actualizar el código de la aplicación.
+
+Para usar Fabric es necesario instalarlo. Podemos hacerlo con apt-get.
+
+    apt-get install fabric
+
+Para usarlo simplemente utilizamos el comando:
+
+    fab [-p claveMV][-H host_destino] <funcion>
+
+    -p indicamos la clave de la maquina virtual remota en la que realizar la acción.
+    -H indicamos el host remoto en el que realizar la acción.
+
+En mi caso
+
+    sudo fab -p '*****' -H vagrant@viajessinbarreras.westeurope.cloudapp.azure.com run_app
+
+Comprobación de que efectivamente funciona la aplicación
+
+![viajessinbarrerasAzure](http://i1266.photobucket.com/albums/jj540/Juantan_Tonio/despliegeAzure_zpsvotl8ett.png)
 
 ### Issues
 
