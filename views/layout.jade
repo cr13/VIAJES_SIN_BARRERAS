@@ -23,11 +23,11 @@ html(lang='en')
           ul.nav.navbar-nav.navbar-right
             li.dropdown.namebar
                 b#Namelogueado.color-light 
-            li#logoutdiv.dropdown
+            li#logoutdiv.dropdown(hidden='hidden')
               a#logout.dropdown-toggle(href='#')
                 i.fa.fa-cogs
                 b Cerrar sesión
-            li#login.dropdown
+            li#login.dropdown(hidden='hidden')
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 i.fa.fa-cogs
                 b.color-blue Login
@@ -102,7 +102,7 @@ html(lang='en')
               window.localStorage.setItem('token', data.token);
               //httpChannel.setRequestHeader("X-Hello", "World", false);
               logeado();
-              
+              vaciarCampos();
             },
             error:function(data){
               $(".error-message").show();
@@ -127,6 +127,10 @@ html(lang='en')
             //alert(JSON.stringify(payload));
             $('#Namelogueado').text('Bienvenido '+JSON.stringify(payload.name))
             $('#Namelogueado').show();
+            $('#logoutdiv').show();
+          }else{
+            $('#login').show();
+            $('#logoutdiv').hide();
           }
         }
         $('#logout').click(function() {

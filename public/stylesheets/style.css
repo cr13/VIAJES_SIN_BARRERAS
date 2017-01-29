@@ -6,6 +6,8 @@ body{
 .color-green{color: #6cbc42;}
 .color-blue{color: #0080c5;}
 .color-light{color: #F1EEED;}
+
+.ocultar-div{visibility: hidden;}
 /*NAVBAR STYLES*/
 .navbar-border{border-bottom: solid 5px #0080c5;}
 .namebar{
