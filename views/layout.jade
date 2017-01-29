@@ -23,11 +23,11 @@ html(lang='en')
           ul.nav.navbar-nav.navbar-right
             li.dropdown.namebar
                 b#Namelogueado.color-light 
-            li#logoutdiv.dropdown(hidden='hidden')
+            li#logoutdiv.dropdown.ocultar-div
               a#logout.dropdown-toggle(href='#')
                 i.fa.fa-cogs
                 b Cerrar sesión
-            li#login.dropdown(hidden='hidden')
+            li#login.dropdown.ocultar-div
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 i.fa.fa-cogs
                 b.color-blue Login
@@ -107,7 +107,7 @@ html(lang='en')
             error:function(data){
               $(".error-message").show();
               vaciarCampos();
-              alert("error "+data.responseJSON.mensaje)
+              //alert("error "+data.responseJSON.mensaje)
             }
             
           })
