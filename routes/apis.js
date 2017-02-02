@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var usuarioCtrl= require('../controles/control_usuario');
+var reservasCtrl= require('../controles/control_reservas');
 var jwt = require('express-jwt');
 
 var auth = jwt({
@@ -17,9 +18,10 @@ router.route('/usuarios')
   .get(usuarioCtrl.findAll);
 
 
-router.route('/usuarios/:username',auth)
+router.route('/usuarios/:username')
  .get(usuarioCtrl.findByUsername)
  .put(usuarioCtrl.actualizar)
+ //.put(auth,usuarioCtrl.actualizar) //Requiere autentificacion
 
 router.route('/usuarios/:DNI')
  .get(usuarioCtrl.findByDNI)
@@ -28,5 +30,16 @@ router.route('/usuarios/:DNI')
 
 router.route("/login")
   .post(usuarioCtrl.login);
+
+router.route("/newHab")
+  .post(reservasCtrl.insertaTipoHAb)
+  .get(reservasCtrl.findHab)
+
+router.route("/buscarBytpname/:NOMBRE")
+  .get(reservasCtrl.findBytpname)
+
+router.route("/newEven")
+  .post(reservasCtrl.insertaEvento);
+//  .get(reservasCtrl.findEventos)
 
 module.exports = router;

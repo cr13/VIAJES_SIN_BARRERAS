@@ -3,24 +3,28 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('MUNICIPIO', {
     ID_MUNICIPIO: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
     ID_PROVINCIA: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'PROVINCIA',
+        key: 'ID_PROVINCIA'
+      }
     },
     NOMBRE: {
       type: DataTypes.STRING,
       allowNull: false
     },
     BORRADO: {
-      type: DataTypes.CHAR(1),
-      allowNull: true,
-      defaultValue: 'N'
+      type: DataTypes.CHAR,
+      allowNull: true
     }
   }, {
-    tableName: 'MUNICIPIO'
+    tableName: 'MUNICIPIO',
+    timestamps: false
   });
 };

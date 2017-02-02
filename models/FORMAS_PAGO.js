@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('FORMAS_PAGO', {
     ID_FORMA_PAGO: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
@@ -13,11 +13,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     BORRADO: {
-      type: DataTypes.CHAR(1),
-      allowNull: true,
-      defaultValue: 'N'
+      type: DataTypes.CHAR,
+      allowNull: true
     }
   }, {
-    tableName: 'FORMAS_PAGO'
+    tableName: 'FORMAS_PAGO',
+    timestamps: false
   });
 };

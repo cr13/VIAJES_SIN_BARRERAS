@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('EVENTOS', {
     ID_EVENTO: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
@@ -20,16 +20,24 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true
     },
-    BORRAR: {
-      type: DataTypes.CHAR(1),
-      allowNull: true,
-      defaultValue: 'N'
+    FECHA: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    AFORO: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
     IMAGEN: {
-      type: DataTypes.CHAR(60),
+      type: DataTypes.CHAR,
+      allowNull: true
+    },
+    BORRAR: {
+      type: DataTypes.CHAR,
       allowNull: true
     }
   }, {
-    tableName: 'EVENTOS'
+    tableName: 'EVENTOS',
+    timestamps: false
   });
 };

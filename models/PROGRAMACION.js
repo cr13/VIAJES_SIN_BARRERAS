@@ -3,18 +3,26 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('PROGRAMACION', {
     ID_PROGRAMACION: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     IDHOTEL: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'HOTELES',
+        key: 'IDHOTEL'
+      }
     },
     ID_EVENTO: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'EVENTOS',
+        key: 'ID_EVENTO'
+      }
     },
     FECHA_ENTRADA: {
       type: DataTypes.DATE,
@@ -25,15 +33,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     PRECIO: {
-      type: 'DOUBLE',
+      type: DataTypes.DOUBLE,
       allowNull: false
     },
     BORRADO: {
-      type: DataTypes.CHAR(1),
-      allowNull: true,
-      defaultValue: 'N'
+      type: DataTypes.CHAR,
+      allowNull: true
     }
   }, {
-    tableName: 'PROGRAMACION'
+    tableName: 'PROGRAMACION',
+    timestamps: false
   });
 };

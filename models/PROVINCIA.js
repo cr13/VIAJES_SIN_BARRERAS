@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('PROVINCIA', {
     ID_PROVINCIA: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
@@ -12,11 +12,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     BORRADO: {
-      type: DataTypes.CHAR(1),
-      allowNull: true,
-      defaultValue: 'N'
+      type: DataTypes.CHAR,
+      allowNull: true
     }
   }, {
-    tableName: 'PROVINCIA'
+    tableName: 'PROVINCIA',
+    timestamps: false
   });
 };

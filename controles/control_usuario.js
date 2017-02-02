@@ -107,8 +107,7 @@ exports.login = function(req, res) {
     console.log(result)
     var pass=req.body.passwords
     if(result.validPassword(pass)){
-
-      return res.json(200,{'token' : result.generarToken()});
+        return res.json(200,{'token' : result.generarToken()});
     }res.json(500, { mensaje: 'Contraseña incorrecta.' });
   });
 };

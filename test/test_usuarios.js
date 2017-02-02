@@ -5,7 +5,7 @@ var server = require('../app');
 var should = chai.should();
 
 chai.use(chaiHttp);
-describe('Test base de datos Mongo', function() {
+describe('Test base de datos Mongo:', function() {
   it('Debería insertar IV con password iv17',function(done){
     chai.request(server)
     .post('/apis/usuarios')
@@ -67,6 +67,15 @@ describe('Test base de datos Mongo', function() {
       res.should.be.json;
       done();
     });
-});
+  });
+/*  it('Deberia mostrar todos los usuario',function(done){
+    chai.request(server)
+    .get('/apis/usuarios')
+    .end(function(err, res){
+      res.should.have.status(500);
+      res.should.be.json;
+      done();
+    });
+  });*/
 
 });

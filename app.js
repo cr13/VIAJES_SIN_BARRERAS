@@ -34,7 +34,7 @@ if(typeof process.env.MONGODB_PORT_27017_TCP_ADDR != 'undefined'){
 }
 mongoose.connect( process.env.MONGODB_URI || database);
 mongoose.connection.on('error', function() {
-  console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+  console.info('Error: Could not connect to MongoDB. Did you forget to run mongod "sudo service mongod start"?');
 });
 
 // catch 404 and forward to error handler

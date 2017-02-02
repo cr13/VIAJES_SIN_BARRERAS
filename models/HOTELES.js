@@ -3,13 +3,18 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('HOTELES', {
     IDHOTEL: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     ID_MUNICIPIO: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'MUNICIPIO',
+        key: 'ID_MUNICIPIO'
+      }
     },
     NOMBRE: {
       type: DataTypes.STRING,
@@ -24,15 +29,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     AFORO: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     BORRADO: {
-      type: DataTypes.CHAR(1),
-      allowNull: true,
-      defaultValue: 'N'
+      type: DataTypes.CHAR,
+      allowNull: true
     }
   }, {
-    tableName: 'HOTELES'
+    tableName: 'HOTELES',
+    timestamps: false
   });
 };

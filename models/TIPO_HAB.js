@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('TIPO_HAB', {
     ID_TIPO_HAB: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
@@ -13,11 +13,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     BORRADO: {
-      type: DataTypes.CHAR(1),
-      allowNull: true,
-      defaultValue: 'N'
+      type: DataTypes.CHAR,
+      allowNull: true
     }
   }, {
-    tableName: 'TIPO_HAB'
+    tableName: 'TIPO_HAB',
+    timestamps: false
   });
 };
