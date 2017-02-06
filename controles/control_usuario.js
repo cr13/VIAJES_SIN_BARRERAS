@@ -32,7 +32,7 @@ exports.findByDNI = function(req, res) {
 
 //POST - Insertar nuevo usuario
 exports.add = function(req, res) {
-  console.log(req.headers)
+  //console.log(req.headers)
  var usu = new modelo_usuario({
    name: req.body.name,
    username: req.body.username,

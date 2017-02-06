@@ -1,39 +1,48 @@
 extends layout
 
 block content
-  h1= title
-  p Bienvenido a #{title}
-  h1 En construcción
-  article#js_item_7450.item.bg-white(itemtype='http://schema.org/Hotel', itemscope='true', data-has-gallery='1', data-is-available='1', data-category='4', data-liking-index='4', data-liking='82')
-    .item__image-area
-      .item__image-wrapper.pos-relative
-        img.item__image.border-radius(src='//imgec.trivago.com/itemimages/74/50/7450_v4_isq.jpeg', srcset='//imgec.trivago.com/itemimages/74/50/7450_v4_isq.jpeg 1x, //imgec.trivago.com/itemimages/74/50/7450_v4_isq@2x.jpeg 2x', alt='NH Sevilla Viapol')
-        button.item__image-gallery-entry.btn--reset.hide-text.item__slideout-toggle
-    .item__flex-column
-      .item__details
-        h3.item__name.m-0.item__slideout-toggle.item__name.m-0.item__slideout-toggle.jsheadline.js_trackable.item__name--4-star(itemprop='name', title='NH Sevilla Viapol')
-          span.name__copytext NH Sevilla Viapol
-          .item__stars-badges
-            .item__stars-wrp
-              span.name__rat-ic.name__rat-ic--star.name__star.name__star--none
-            .item__flags
-        .item__location.ov-hidden.item__slideout-toggle.map.js_button_map_7450
-          p.details__paragraph
-            | Sevilla, 
-            span.item__distance a 1,8 km de Centro de la ciudad
-        .item__review.item__slideout-toggle.val_82(itemprop='aggregateRating', itemtype='http://schema.org/AggregateRating', itemscope='true')
-          em.item__mini-icon.fl-leading.border-radius.item__mini-icon-color-4
-            span.icon-ic.icon-icn_smiley_4_light.icon-contain
-              svg(baseprofile='tiny', xmlns='http://www.w3.org/2000/svg', width='24', height='24', viewbox='0 0 24 24')
-                path(fill-rule='evenodd', fill='#FFF', d='M4.8 7.7c1.7 0 3.1-1.7 3.1-3.9S6.5 0 4.8 0 1.7 1.7 1.7 3.9s1.4 3.8 3.1 3.8zm14.4 0c1.7 0 3.1-1.7 3.1-3.9S20.9 0 19.2 0c-1.7 0-3.1 1.7-3.1 3.9s1.4 3.8 3.1 3.8zm2.9 9.6c-2.2 2-4.7 4.3-10.1 4.3-5.4 0-7.9-2.4-10.1-4.3-1-.9-3.1-.3-1 1.7 2.3 2.4 4.6 4.9 11.1 5 6.5-.1 8.8-2.6 11.1-4.9 2.1-2.1 0-2.7-1-1.8z')
-      section.item__deal-best(itemprop='makesOffer', itemtype='http://schema.org/Offer', itemscope='true')
-        .item__deal-best-link.font-dark.js_item_bestprice.js_co_link.js_co_ctx-menu.reduced(itemprop='priceSpecification', itemtype='http://schema.org/PriceSpecification', itemscope='true', data-item='7450', onclick='window.Clickout.shortClick(this);', data-id='f2d3b5b3', data-link='c9ZXS&X:.Y7Yba01/=AKpSzKFkpOx3BKN%lKQ7JtVM:HVS/zrtJAxtY:ItVoJVIEV4F?MR40Q3JrQQoIVx3yr7:KtQ/IH3E?JQotIejGtSp?VHg9IRN0DV/VtI4MM4EItQtHNJpLt8FNxJEyw6puwNQDKNoHxVZIJ87wAReBM4:tH4/:rItDMVRuQxZCJxFEuRB0xQANMnRIuSMrK88NIt/OsMAHtxxssMR6Q4:/ItfpJ3x:NS7oQI4wQVJQVVpNNtVJrMYQMnBLL1ExH7ItJnNVt3Y0MQ7MxV4Qx3BuQQSBNentHVICVMoswtEgIxSzV7/HxLWNt3JpInx2Et:wDSj9VSJuK4pnK4tLt3xK', data-bestprice='63', data-co_li_lo='1')
-          em.item__flag.font-tiny.fw-bold.fs-normal.ta-center.trv-maincolor-03.font-bright.cur-pointer--hover.flag--deal-best ‎-46%
-          .item__best-details
-            div
-              em.item__deal-best-ota.block.fs-normal.cur-pointer--hover Expedia
-              meta(itemprop='maxPrice', content='117')
-              meta(itemprop='minPrice', content='63')
-              s.item__price-striked.block.cur-pointer--hover  ‎117 € 
-              strong.item__best-price.block.cur-pointer--hover.price_min ‎63 €
-          button.btn.btn--deal.icon-bg-icn_arrow_deal.fl-trailing Ver oferta
+  .container.marketing
+    // Three columns of text below the carousel
+
+block script  
+  script.
+    $(document).ready(function(){
+      cargarActividades();
+      
+      function cargarActividades(){
+        var cadena='';
+        $.ajax({
+          type:"GET",
+          dataType: "json",
+          cache:false,
+          url: "/apis/newEven",
+        }).done(function( data){
+          //alert(data.Eventos_disponibles[1].ID_EVENTO)
+            cadena='<div class="row">';
+            var num_act=(data.Eventos_disponibles.length);
+            if(num_act>=18)
+              num_act=18;
+            for (var i = 0; i < num_act ; i++) {
+              var idact=data.Eventos_disponibles[i].ID_EVENTO;
+              var nombre=data.Eventos_disponibles[i].NOMBRE;
+              var img=data.Eventos_disponibles[i].IMAGEN;
+              var fec=data.Eventos_disponibles[i].FECHA;
+              var aforo=data.Eventos_disponibles[i].AFORO;
+              //alert(JSON.stringify(data.Eventos_disponibles));
+              //alert(data.Eventos_disponibles.length);
+
+              cadena +=' <div class="col-lg-4">'+
+                            '<img class="rounded-circle" src="/images/'+ img +'" alt="'+nombre+'" width="140" height="140">'+
+                            '<h4>'+ nombre +'</h4>'+
+                            '<p></p>'+
+                            '<p><a class="btn btn-secondary" href="/masinfo?id='+idact+'" role="button">Más detalles &raquo;</a></p>'+
+                        '</div><!-- /.col-lg-4 -->';    
+              if((i+1)%3==0 && i!=num_act-1){
+                cadena+='</div><div class="row">';}
+              if(i==num_act-1){
+                cadena+='</div>'}
+            }  
+              $(".container.marketing").append(cadena);            
+          });
+        };    
+    });

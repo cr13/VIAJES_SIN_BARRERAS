@@ -27,7 +27,7 @@ describe('Test base de datos POSTGRES:', function() {
   it('Debería insertar EVENTO ruta a caballo',function(done){
     chai.request(server)
     .post('/apis/newEven')
-    .send({NOM_EVEN:'Ruta a caballo', DESCRIPCION:'Ruta a caballo 10 km por sierra nevada', TIPO_EVENTO:'Ruta a caballo',FECHA:'15-10-2017',AFORO:'10',IMAGEN:'null',BORRAR:'N'})
+    .send({nombre:'Ruta a caballo', des:'Ruta a caballo 10 km por sierra nevada', tpeven:'Ruta a caballo',fec:'2017-02-05T12:12',aforo:10,img:'null',bor:'N'})
     .end(function(err, res){
       res.should.have.status(200);
       res.should.be.json;
@@ -38,6 +38,25 @@ describe('Test base de datos POSTGRES:', function() {
 it('Deberia mostrar campos del tipo hab Suite',function(done){
   chai.request(server)
   .get('/apis/buscarBytpname/Suite')
+  .end(function(err, res){
+    res.should.have.status(200);
+    res.should.be.json;
+    done();
+  });
+});
+
+it('Deberia mostrar todos los eventos',function(done){
+  chai.request(server)
+  .get('/apis/newEven')
+  .end(function(err, res){
+    res.should.have.status(200);
+    res.should.be.json;
+    done();
+  });
+});
+it('Deberia mostrar evento 89',function(done){
+  chai.request(server)
+  .get('/apis/masinfo/'+89)
   .end(function(err, res){
     res.should.have.status(200);
     res.should.be.json;

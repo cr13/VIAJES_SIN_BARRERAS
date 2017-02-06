@@ -5,6 +5,7 @@ html(lang='en')
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/css/fileinput.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     
   body
@@ -20,6 +21,11 @@ html(lang='en')
           ul.nav.navbar-nav
             .center-text
               a.navbar-brand(href='/') Viajes sin barreras
+          ul#barAdmin.nav.navbar-nav.navbar-left.ocultar-div
+            li.active(style='display: none;')
+              a(href='#') Home
+            li.actinavactive
+              a(href='/actividades') Actividades 
           ul.nav.navbar-nav.navbar-right
             li.dropdown.namebar
                 b#Namelogueado.color-light 
@@ -45,12 +51,12 @@ html(lang='en')
                         span.input-group-addon
                           i.glyphicon.glyphicon-user.color-blue
                         // USERNAME OR EMAIL ADDRESS
-                        input#login-username.form-control(type='text', name='username', value='', placeholder='username', pattern='[a-zA-Z0-9]{4,}', title='Mínimo 4 letras o números.', oninvalid="this.setCustomValidity('Enter User Name Here')", oninput="setCustomValidity('')", required='')
+                        input#login-username.form-control(type='text', name='username', value='', placeholder='username', pattern='[a-zA-Z0-9]{4,}', title='Mínimo 4 letras o números.', oninvalid="this.setCustomValidity('Nick incorrecto')", oninput="setCustomValidity('')", required='')
                       .input-group(style='margin-bottom: 10px')
                         span.input-group-addon
                           i.glyphicon.glyphicon-lock.color-blue
                         // PASSWORD
-                        input#login-password.form-control(type='password', name='passwords', placeholder='password', pattern='.{4,}', title='Mínimo 4 letras o números.', oninvalid="this.setCustomValidity('Enter a password')", oninput="setCustomValidity('')", required='')
+                        input#login-password.form-control(type='password', name='passwords', placeholder='password', pattern='.{4,}', title='Mínimo 4 letras o números.', oninvalid="this.setCustomValidity('Clave incorrecta')", oninput="setCustomValidity('')", required='')
                       .center-text
                         label
                           input#login-remember(type='checkbox', name='remember', value='1')
@@ -72,22 +78,26 @@ html(lang='en')
     .container-fluid.text-center
       .row.content
         .col-sm-2.sidenav
-          .well
-            p Publicidad
-
+          div#publi
+            img(src='/publicidad/ad_twitter.jpg')
+            
         #contenedorPrincipal.col-sm-8.text-left
           block content
             h5 peppepepee
         .col-sm-2.sidenav
-          .well
-            p Publicidad
+          div#publi
+            img(src='/publicidad/ad_twitter.jpg')
     footer.container-fluid.text-center
       p Copyright 2016 Viajes sin barreras | Todos los derechos reservados
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/js/fileinput.min.js')
+    script(src='/javascripts/bootstrap-notify.js')
+    script(src='/javascripts/funciones.js')
     block script
     script.
       $(document).ready(function(){
+        
         logeado();
         $(".error-message").hide();
         $("#loginform").submit(function(e){
@@ -125,10 +135,14 @@ html(lang='en')
             payload = window.atob(payload);
             payload = JSON.parse(payload);
             //alert(JSON.stringify(payload));
-            $('#Namelogueado').text('Bienvenido '+ payload.name)
+            $('#Namelogueado').text('Bienvenido '+ payload.name )
             $('#Namelogueado').show();
+            //alert(JSON.stringify(payload.tipo_usu))
+            if(payload.tipo_usu=="Admin")
+                $('#barAdmin').show();
             $('#logoutdiv').show();
           }else{
+            $('#barAdmin').hide();
             $('#login').show();
             $('#logoutdiv').hide();
           }
@@ -137,6 +151,7 @@ html(lang='en')
             window.localStorage.removeItem('token');
             $('#Namelogueado').hide();
             $('#logoutdiv').hide();
-            $('#login').show();            
+            $('#login').show();
+            $('#barAdmin').hide();            
         })
       })

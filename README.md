@@ -20,7 +20,7 @@
 ### Requisitos mínimos
     Node.js
     npm
-    MySQL server
+    PostgreSQL
     MongoDB
 
 ### Instalación

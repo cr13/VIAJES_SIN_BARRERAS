@@ -39,7 +39,22 @@ router.route("/buscarBytpname/:NOMBRE")
   .get(reservasCtrl.findBytpname)
 
 router.route("/newEven")
-  .post(reservasCtrl.insertaEvento);
-//  .get(reservasCtrl.findEventos)
+  .post(reservasCtrl.insertaEvento)
+  .get(reservasCtrl.leerActividades)
+
+/*
+router.get('/masinfo/:id', function(req, res, next) {
+  var id = req.param('id');
+  console.log("//////////////////////////"+req.param('id'));
+  res.send(id);
+});*/
+
+router.route("/masinfo")
+  .get(reservasCtrl.leerActividad)
+  //.post(reservasCtrl.reservar)
+
+router.route("/masinfo/:id")
+  .get(reservasCtrl.leerActividad)
+  //.post(reservasCtrl.reservar)
 
 module.exports = router;

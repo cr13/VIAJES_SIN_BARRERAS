@@ -32,11 +32,13 @@ userSchema.methods.validPassword = function(password) {
 userSchema.methods.generarToken=function(){
 	var caducidad=new Date()
 	caducidad.setDate(caducidad.getDate()+7)
+	console.log(this.role);
 	return jwt.sign({
 		_id: this._id,
 		nick: this.name,
 		name: this.username,
 		email: this.email,
+		tipo_usu: this.role,
 		exp: parseInt(caducidad.getTime()/1000),
 	},"UnaClave")
 }

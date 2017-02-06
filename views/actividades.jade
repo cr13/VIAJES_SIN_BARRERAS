@@ -1,0 +1,82 @@
+extends layout
+
+block content
+  .container_Registro
+    div#mensaje
+    form.form-horizontal(role='form', id="actividadesForm", enctype="multipart/form-data")
+      center
+        h2 Nueva Actividad
+      .form-group
+        //label.col-sm-3.control-label(for='nick') Nick
+        .col-sm-9.col-sm-offset-1
+          input#nombre.form-control(name="nombre", type='text', placeholder='Titulo de actividad', maxlength="50",oninvalid="this.setCustomValidity('Debes escribir un Titulo(máx. 50 caracteres).')", oninput="setCustomValidity('')", autofocus='', required='')
+      .form-group
+        //label.col-sm-3.control-label(for='password') Password
+        .col-sm-9.col-sm-offset-1
+          input#tpeven.form-control(name="tpeven", type='text', placeholder='Tipo de evento', maxlength="40")
+      .form-group
+        //label.col-sm-3.control-label(for='nick') Nick
+        .col-sm-9.col-sm-offset-1
+          textarea#des.form-control.noresize(name="des", type='text', placeholder='Descripción de la activiad', maxlength="1498")
+          h6#count_message.pull-right
+      .form-group
+        //label.col-sm-3.control-label(fautofocusor='dni') DNI
+        .col-sm-9.col-sm-offset-1
+          input#aforo.form-control(name="aforo", type='number', placeholder='Número de aforo', min="1", oninvalid="this.setCustomValidity('Numero de aforo incorrecto')", oninput="setCustomValidity('')", required='')
+      .form-group
+        //label.col-sm-3.control-label(for='email') Email
+        .col-sm-9.col-sm-offset-1
+          input#fecha.form-control(name="fec", type='datetime-local', placeholder='Dia y hora',required='')
+      .form-group
+        //label.col-sm-3.control-label(for='email') Email
+        .col-sm-9.col-sm-offset-1
+          input#img.form-control.file.file-loading( type='file', placeholder='imagen de la actividad', maxlength="150",data-show-upload='false', height: "50px",data-show-caption='true',data-allowed-file-extensions='["jpeg","jpg", "png"]')
+      .form-group
+        .col-sm-9.col-sm-offset-1
+          button.btn.btn-primary.btn-block(type='submit') Guardar actividad
+    // /form
+  // ./container
+block script  
+  script.
+    $(document).ready(function(){
+      
+      $('.actinavactive').addClass("active");
+      //$('#actinav').find('.active').removeClass('active');
+      
+      
+      var text_max = 1498;
+      $('#count_message').html(text_max + ' restante');
+
+      $('#des').keyup(function() {
+        var text_length = $('#des').val().length;
+        var text_remaining = text_max - text_length;
+        
+        $('#count_message').html(text_remaining + ' restante');
+      });
+      
+      $("#actividadesForm").submit(function(e){
+        //alert($('.file-caption-name').val());
+        
+        $('#img').get(0).setAttribute('value', $(".file-caption-name").attr("title"));
+        //alert($("#actividadesForm").serialize()+'&img='+$(".file-caption-name").attr("title"));
+      
+        e.preventDefault()
+        $.ajax({
+          type:"POST",
+          url:"/apis/newEven",    
+          data:$("#actividadesForm").serialize()+'&img='+$(".file-caption-name").attr("title"),
+          dataType:"json",
+          success:function(data){
+            //window.location.href = "/";
+            notificacion('success','<strong>Guardando</strong> espere por favor...',false,true);
+            vaciar("actividadesForm");
+            //alert(JSON.stringify(data.mensaje))
+          },
+          error:function(data){
+            notificacion('danger','<strong>Error</strong> '+data.responseJSON.mensaje,true,false);
+          }
+        })
+        
+      });
+         
+    })
