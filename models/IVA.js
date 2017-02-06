@@ -13,7 +13,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'IVA',
-    timestamps: false
+    tableName: 'IVA'
   });
 };

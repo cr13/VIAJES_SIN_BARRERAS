@@ -41,7 +41,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'PROGRAMACION',
-    timestamps: false
+    tableName: 'PROGRAMACION'
   });
 };

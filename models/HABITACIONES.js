@@ -41,7 +41,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'HABITACIONES',
-    timestamps: false
+    tableName: 'HABITACIONES'
   });
 };

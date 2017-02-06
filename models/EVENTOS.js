@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     FECHA: {
-      type: DataTypes.DATE,
+      type: DataTypes.TIME,
       allowNull: true
     },
     AFORO: {
@@ -37,7 +37,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'EVENTOS',
-    timestamps: false
+    tableName: 'EVENTOS'
   });
 };
