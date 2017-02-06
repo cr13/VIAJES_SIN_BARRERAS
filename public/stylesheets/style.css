@@ -1,9 +1,20 @@
-body{
-  /*  background:url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');
-*/
-background-color: #F1F1F1;
+html
+{
+    position: relative;
+    min-height: 100%;
 }
-
+body
+{
+    margin: 0 0 65px;
+    background-color: #F1F1F1;
+}
+footer
+{
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    height: 65px;
+}
 
 
 #publi img {
