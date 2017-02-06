@@ -71,7 +71,7 @@ exports.insertaEvento= function(req, res){
   	}).then(function(){
       res.json(200,{mensaje: 'Nueva actividad insertada'});
   	}).catch(function(error){
-  		res.json(501,{mensaje: 'Error al insertar actividad'});
+  		res.json(501,{mensaje: 'Error al insertar actividad ' + error});
   	});
 };
 
