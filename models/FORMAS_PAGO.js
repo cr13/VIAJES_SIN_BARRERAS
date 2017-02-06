@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'FORMAS_PAGO'
+    tableName: 'FORMAS_PAGO',
+    timestamps: false
   });
 };

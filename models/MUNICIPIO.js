@@ -24,6 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'MUNICIPIO'
+    tableName: 'MUNICIPIO',
+    timestamps: false
   });
 };

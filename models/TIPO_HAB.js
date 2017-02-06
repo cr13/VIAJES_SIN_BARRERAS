@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'TIPO_HAB'
+    tableName: 'TIPO_HAB',
+    timestamps: false
   });
 };

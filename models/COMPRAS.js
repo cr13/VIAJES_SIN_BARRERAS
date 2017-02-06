@@ -29,6 +29,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'COMPRAS'
+    tableName: 'COMPRAS',
+    timestamps: false
   });
 };
